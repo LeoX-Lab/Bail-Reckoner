@@ -159,6 +159,85 @@ pre{white-space:pre-wrap;font:13px/1.7 ui-monospace,Consolas,monospace;backgroun
 footer{background:var(--navy);color:#b9c8dd;font-size:12.5px;padding:18px 0;margin-top:auto}
 footer b{color:#fff}
 .hide{display:none!important}
+
+/* ============ RESPONSIVE / MOBILE ============ */
+@media(max-width:980px){
+ .grid{gap:14px;padding:14px 0 44px}
+}
+@media(max-width:760px){
+ body{font-size:15px}
+ .wrap{padding:0 14px}
+ /* masthead stacks */
+ .mast .wrap{flex-wrap:wrap;gap:10px;padding-top:12px;padding-bottom:12px}
+ .mast h1{font-size:18px}
+ .mast .hi{font-size:12px}
+ .mast .org{margin-left:0;text-align:left;order:3;width:100%;font-size:11.5px;
+  border-top:1px solid var(--line2);padding-top:8px}
+ .langsw{margin-left:auto;order:2}
+ .emblem{width:38px;height:38px}
+ .top{font-size:10.5px}
+ .top .wrap{height:auto;padding-top:5px;padding-bottom:5px;gap:2px;justify-content:center;text-align:center}
+ /* nav becomes a scrollable strip */
+ nav .wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding:0 8px}
+ nav .wrap::-webkit-scrollbar{display:none}
+ nav button{padding:11px 14px;font-size:13.5px;white-space:nowrap;flex:none}
+ nav button svg{width:15px;height:15px}
+ /* cards & spacing */
+ .cb{padding:13px}
+ .card>h3{padding:10px 13px;font-size:13.5px}
+ .ban{padding:14px;gap:11px}
+ .ban h2{font-size:17.5px}
+ .ban p{font-size:14px}
+ .ban svg{width:22px;height:22px}
+ .facts{grid-template-columns:1fr 1fr;gap:9px}
+ .fact{padding:9px 11px}
+ .fact .v{font-size:16px}
+ .fact .k{font-size:10.5px}
+ /* form: keep two-up fields side by side but tighter */
+ .two{gap:8px}
+ input[type=text],input[type=date],input[type=number],select{font-size:16px} /* 16px stops iOS zoom */
+ .btn{padding:13px;font-size:15.5px}
+ .chk{font-size:14px;padding:3px 0}
+ .chk input{width:19px;height:19px} /* larger tap target */
+ /* ---- WIDE TABLES → STACKED CARDS ---- */
+ table.resp thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+ table.resp tr{display:block;border:1px solid var(--line);border-radius:6px;
+  padding:11px 12px;margin-bottom:10px;background:#fff}
+ table.resp tr:last-child{margin-bottom:0}
+ table.resp td{display:flex;justify-content:space-between;gap:14px;align-items:flex-start;
+  border:0;padding:5px 0;font-size:13.8px;text-align:right}
+ table.resp td:before{content:attr(data-l);font-weight:600;color:var(--mut);
+  text-align:left;flex:none;max-width:44%;font-size:12.5px}
+ table.resp td:first-child{border-bottom:1px solid var(--line2);padding-bottom:8px;
+  margin-bottom:4px;font-size:15px}
+ table.resp tbody tr:hover{background:#fff}
+ /* two-column key/value tables just tighten */
+ table:not(.resp) td{padding:8px 6px;font-size:13.8px}
+ table:not(.resp) td:first-child{width:38%!important}
+ /* gauges + clock */
+ .g .h{font-size:13.5px}
+ .g ul{font-size:12.5px;padding-left:16px}
+ .clk{height:22px}
+ .scale{font-size:11px}
+ .steps li{padding:10px 0;gap:10px}
+ .steps b{font-size:14.5px}
+ .steps span{font-size:13px}
+ .route{padding:10px 12px}
+ .route h4{font-size:14.8px}
+ .route p{font-size:13.3px}
+ .cite b{font-size:13.5px}
+ .cite p{font-size:13px}
+ pre{font-size:11.5px;padding:12px;line-height:1.6}
+ .note,.warn,.ok{font-size:13px;padding:9px 11px}
+ .empty{padding:44px 16px}
+ .empty h3{font-size:16.5px}
+}
+@media(max-width:420px){
+ .facts{grid-template-columns:1fr}
+ .two{grid-template-columns:1fr}
+ .mast h1{font-size:17px}
+ nav button span{font-size:13px}
+}
 @media print{.top,nav,#side,footer,.btn{display:none}.grid{grid-template-columns:1fr}body{background:#fff}}
 </style>
 </head>
@@ -1362,12 +1441,12 @@ function drawFinding(r){
  }
 
  h+=card("book","Charges and penal provisions",
-  '<table><tr><th>'+tr("Offence")+'</th><th>'+tr("Statute")+'</th><th>'+tr("Sentence")+'</th><th>'+tr("Bail")+'</th><th>'+tr("Compounding")+'</th><th>'+tr("Court")+'</th></tr>'+
-  r.charges.map(function(c){return "<tr><td><b>"+tr(c.title)+"</b><br><span class='sm'>"+tr(CATL[c.category])+"</span></td>"+
-   "<td>"+c.act+(c.bns&&c.bns!=="—"?"<br><span class='sm'>"+tr("BNS")+" §"+c.bns+"</span>":"")+"</td>"+
-   "<td>"+tr(BailReckoner.fmtTerm(c.max))+(c.min?"<br><span class='sm' style='color:var(--red)'>"+tr("min")+" "+tr(BailReckoner.fmtTerm(c.min))+"</span>":"")+"</td>"+
-   "<td><span class='tag "+(/^Bailable/.test(c.bail)?"t-g":"t-r")+"'>"+tr(c.bail)+"</span><br><span class='sm'>"+tr(c.cog?"Cognizable":"Non-cognizable")+"</span></td>"+
-   "<td class='sm'>"+tr(c.comp)+"</td><td class='sm'>"+tr(c.court)+"</td></tr>"}).join("")+'</table>'+
+  '<table class="resp"><tr><th>'+tr("Offence")+'</th><th>'+tr("Statute")+'</th><th>'+tr("Sentence")+'</th><th>'+tr("Bail")+'</th><th>'+tr("Compounding")+'</th><th>'+tr("Court")+'</th></tr>'+
+  r.charges.map(function(c){return "<tr><td data-l=\""+tr("Offence")+"\"><b>"+tr(c.title)+"</b><br><span class='sm'>"+tr(CATL[c.category])+"</span></td>"+
+   "<td data-l=\""+tr("Statute")+"\">"+c.act+(c.bns&&c.bns!=="—"?"<br><span class='sm'>"+tr("BNS")+" §"+c.bns+"</span>":"")+"</td>"+
+   "<td data-l=\""+tr("Sentence")+"\">"+tr(BailReckoner.fmtTerm(c.max))+(c.min?"<br><span class='sm' style='color:var(--red)'>"+tr("min")+" "+tr(BailReckoner.fmtTerm(c.min))+"</span>":"")+"</td>"+
+   "<td data-l=\""+tr("Bail")+"\"><span class='tag "+(/^Bailable/.test(c.bail)?"t-g":"t-r")+"'>"+tr(c.bail)+"</span><br><span class='sm'>"+tr(c.cog?"Cognizable":"Non-cognizable")+"</span></td>"+
+   "<td class='sm' data-l=\""+tr("Compounding")+"\">"+tr(c.comp)+"</td><td class='sm' data-l=\""+tr("Court")+"\">"+tr(c.court)+"</td></tr>"}).join("")+'</table>'+
   r.charges.map(function(c){return c.notes.map(function(n){return '<div class="note"><b>'+tr(c.title)+".</b> "+tr(n)+'</div>'}).join("")}).join(""),
   r.charges.length+" "+tr("charge(s)"));
 
@@ -1453,12 +1532,12 @@ function drawRoster(){
   '<div class="fact"><div class="k">'+tr("Median custody")+'</div><div class="v">'+tr(BailReckoner.fmtDur(rows.map(function(r){return r.servedMonths}).sort(function(a,b){return a-b})[Math.floor(rows.length/2)]))+'</div></div></div>';
  h+=card("list","Undertrial Review Committee — screening board",
   '<p class="sm" style="margin:0 0 12px">'+tr("Duty of the Jail Superintendent under s.479(3) BNSS to report eligible undertrials, read with <i>In Re: Inhuman Conditions in 1382 Prisons</i> (2016) 3 SCC 700 requiring quarterly UTRC sittings. Sorted by priority for release — click any row to open the full result.")+'</p>'+
-  '<table><tr><th>'+tr("Register No.")+'</th><th>'+tr("Name")+'</th><th>'+tr("Jail")+'</th><th>'+tr("Charges")+'</th><th>'+tr("Custody")+'</th><th>'+tr("Result")+'</th><th>'+tr("Risk")+'</th><th>'+tr("Best route")+'</th></tr>'+
+  '<table class="resp"><tr><th>'+tr("Register No.")+'</th><th>'+tr("Name")+'</th><th>'+tr("Jail")+'</th><th>'+tr("Charges")+'</th><th>'+tr("Custody")+'</th><th>'+tr("Result")+'</th><th>'+tr("Risk")+'</th><th>'+tr("Best route")+'</th></tr>'+
   rows.map(function(r){var c=r.verdict==="ELIGIBLE"?"t-g":r.verdict==="CONTESTED"?"t-r":"t-a";
-   return '<tr class="rl" data-id="'+r.id+'"><td class="sm">'+r.id+'</td><td><b>'+r.name+'</b></td><td class="sm">'+r.jail+'</td>'+
-    '<td class="sm">'+r.chargeIds.map(function(i){var o=OFFENCES.filter(function(x){return x.id===i})[0];return o?(o.ipc!=="—"?"§"+o.ipc:o.id):i}).join(", ")+'</td>'+
-    '<td>'+tr(r.served)+(r.over?' <span class="tag t-r">'+tr("OVER")+'</span>':"")+'</td><td><span class="tag '+c+'">'+tr(r.verdict)+'</span></td>'+
-    '<td class="sm">'+tr(r.risk)+'</td><td class="sm">'+tr(r.top)+'</td></tr>'}).join("")+'</table>',rows.length+" "+tr("listed"));
+   return '<tr class="rl" data-id="'+r.id+'"><td class="sm" data-l="'+tr("Register No.")+'">'+r.id+'</td><td data-l="'+tr("Name")+'"><b>'+r.name+'</b></td><td class="sm" data-l="'+tr("Jail")+'">'+r.jail+'</td>'+
+    '<td class="sm" data-l="'+tr("Charges")+'">'+r.chargeIds.map(function(i){var o=OFFENCES.filter(function(x){return x.id===i})[0];return o?(o.ipc!=="—"?"§"+o.ipc:o.id):i}).join(", ")+'</td>'+
+    '<td data-l="'+tr("Custody")+'">'+tr(r.served)+(r.over?' <span class="tag t-r">'+tr("OVER")+'</span>':"")+'</td><td data-l="'+tr("Result")+'"><span class="tag '+c+'">'+tr(r.verdict)+'</span></td>'+
+    '<td class="sm" data-l="'+tr("Risk")+'">'+tr(r.risk)+'</td><td class="sm" data-l="'+tr("Best route")+'">'+tr(r.top)+'</td></tr>'}).join("")+'</table>',rows.length+" "+tr("listed"));
  h+=card("info","Committee note",
   '<div class="ok"><b>'+(LANG==="hi"?rows.length+" में से "+el+" विचाराधीन बंदियों को रिहाई का वैधानिक अधिकार प्राप्त है।":el+' of '+rows.length+' undertrials have a statutory entitlement to release.')+'</b> '+
    (LANG==="hi"?s4+" ने धारा 479 भा.ना.सु.सं. की सीमा पार कर ली है और "+df+" को डिफ़ॉल्ट जमानत का अर्जित अधिकार है। समिति सचिव, DLSA को उनकी ओर से आवेदन दाखिल करने का निर्देश दे सकती है।":s4+' have crossed the s.479 BNSS threshold and '+df+' have an accrued right to default bail. The Committee may direct the Secretary, DLSA to move applications on their behalf.')+'</div>'+
@@ -1483,11 +1562,11 @@ function drawActs(){
  var h='<div class="card"><div class="cb"><p style="margin:0"><b>'+tr("Statutory database.")+'</b> '+OFFENCES.length+
   ' '+tr("offences mapped across the Indian Penal Code, the Bharatiya Nyaya Sanhita 2023 and the special statutes, with maximum and minimum sentence, cognizability, bailability, compounding status and trial forum. This is the knowledge base the eligibility engine reads from.")+'</p></div></div>';
  order.forEach(function(k){if(!by[k])return;
-  h+=card("book",NAMES[k],'<table><tr><th>'+tr("Offence")+'</th><th>'+tr("Statute")+'</th><th>'+tr("BNS")+'</th><th>'+tr("Sentence")+'</th><th>'+tr("Bail")+'</th><th>'+tr("Compounding")+'</th></tr>'+
-   by[k].map(function(c){return "<tr><td><b>"+tr(c.title)+"</b></td><td class='sm'>"+c.act+"</td><td class='sm'>"+
-    (c.bns&&c.bns!=="—"?"§"+c.bns:"—")+"</td><td>"+tr(BailReckoner.fmtTerm(c.max))+
+  h+=card("book",NAMES[k],'<table class="resp"><tr><th>'+tr("Offence")+'</th><th>'+tr("Statute")+'</th><th>'+tr("BNS")+'</th><th>'+tr("Sentence")+'</th><th>'+tr("Bail")+'</th><th>'+tr("Compounding")+'</th></tr>'+
+   by[k].map(function(c){return "<tr><td data-l=\""+tr("Offence")+"\"><b>"+tr(c.title)+"</b></td><td class='sm' data-l=\""+tr("Statute")+"\">"+c.act+"</td><td class='sm' data-l=\""+tr("BNS")+"\">"+
+    (c.bns&&c.bns!=="—"?"§"+c.bns:"—")+"</td><td data-l=\""+tr("Sentence")+"\">"+tr(BailReckoner.fmtTerm(c.max))+
     (c.min?"<br><span class='sm' style='color:var(--red)'>"+tr("min")+" "+tr(BailReckoner.fmtTerm(c.min))+"</span>":"")+"</td>"+
-    "<td><span class='tag "+(/^Bailable/.test(c.bail)?"t-g":"t-r")+"'>"+tr(c.bail)+"</span></td><td class='sm'>"+tr(c.comp)+"</td></tr>"}).join("")+
+    "<td data-l=\""+tr("Bail")+"\"><span class='tag "+(/^Bailable/.test(c.bail)?"t-g":"t-r")+"'>"+tr(c.bail)+"</span></td><td class='sm' data-l=\""+tr("Compounding")+"\">"+tr(c.comp)+"</td></tr>"}).join("")+
    '</table>',by[k].length+" "+tr("offences"));
  });
  $("#out").innerHTML=h;window.scrollTo(0,0);
@@ -1495,5 +1574,5 @@ function drawActs(){
 draw();
 </script>
 <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js/v31edd6df95cf4e85bb4c19e7a9bdbcba1788362987495" integrity="sha512-iIg7k2xntmwu6/uSb5tpc/hySgZc4eoL31yB29W6tJFo2akwjPWcEqnCEdJvGexCL0KEQwVYv5BlowfhVz26hg==" data-cf-beacon='{"version":"2024.11.0","token":"1954b47c125f43f8b4338b3c4f804e4f","spa":2}' crossorigin="anonymous"></script>
-<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a36b82a8ce2074de',t:'MTc4ODY3NzEyMQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a36bbeaee992edd1',t:'MTc4ODY3OTU3OQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
