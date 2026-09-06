@@ -1,0 +1,1499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Bail Reckoner | Department of Justice</title>
+<style>
+/* ===== NATIONAL PORTAL STYLE: clean, accessible, government ===== */
+:root{
+ --navy:#12305c; --navy2:#1b4380; --blue:#1a5fb4; --line:#d6dce5; --line2:#e8ecf2;
+ --bg:#f4f6f9; --ink:#1c2530; --mut:#5a6675; --white:#fff;
+ --grn:#1e6b3a; --grnbg:#e8f5ec; --amb:#8a5a00; --ambbg:#fdf3e0; --red:#a8232b; --redbg:#fbeaea;
+ --saf:#ff9933; --gre:#138808;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+ font:15px/1.6 "Segoe UI",Roboto,-apple-system,"Helvetica Neue",Arial,sans-serif}
+h1,h2,h3,h4{margin:0;font-weight:600}
+.wrap{max-width:1240px;margin:0 auto;padding:0 20px}
+
+/* ---- top strip ---- */
+.top{background:var(--navy);color:#c9d6e8;font-size:12px}
+.top .wrap{display:flex;justify-content:space-between;align-items:center;height:32px}
+.top a{color:#c9d6e8;text-decoration:none}
+.tri{height:3px;background:linear-gradient(90deg,var(--saf) 0 33.3%,#fff 33.3% 66.6%,var(--gre) 66.6%)}
+
+/* ---- masthead ---- */
+.mast{background:var(--white);border-bottom:1px solid var(--line)}
+.mast .wrap{display:flex;align-items:center;gap:14px;padding-top:14px;padding-bottom:14px}
+.emblem{width:46px;height:46px;flex:none;color:var(--navy)}
+.mast h1{font-size:22px;color:var(--navy);letter-spacing:-.2px}
+.mast .hi{font-size:13px;color:var(--mut);font-weight:400}
+.mast .org{margin-left:auto;text-align:right;font-size:12px;color:var(--mut);line-height:1.45}
+.mast .org b{display:block;color:var(--navy);font-size:13px}
+.langsw{display:flex;border:1px solid var(--line);border-radius:4px;overflow:hidden;margin-left:16px}
+.langsw button{border:0;background:var(--white);padding:6px 12px;font:inherit;font-size:13px;cursor:pointer;color:var(--mut)}
+.langsw button.on{background:var(--navy);color:#fff;font-weight:600}
+
+/* ---- nav ---- */
+nav{background:var(--navy2);box-shadow:0 1px 3px rgba(0,0,0,.12)}
+nav .wrap{display:flex;gap:0}
+nav button{background:transparent;border:0;border-bottom:3px solid transparent;color:#dbe5f2;
+ padding:12px 20px;font:inherit;font-size:14.5px;cursor:pointer;display:flex;align-items:center;gap:8px}
+nav button:hover{background:rgba(255,255,255,.09);color:#fff}
+nav button.on{background:var(--bg);color:var(--navy);border-bottom-color:var(--saf);font-weight:600}
+nav button svg{width:17px;height:17px}
+
+/* ---- layout ---- */
+.grid{display:grid;grid-template-columns:340px 1fr;gap:20px;padding:20px 0 60px;align-items:start}
+.grid.solo{grid-template-columns:1fr}
+@media(max-width:980px){.grid{grid-template-columns:1fr}}
+
+.card{background:var(--white);border:1px solid var(--line);border-radius:6px;margin-bottom:16px}
+.card>h3{padding:11px 16px;border-bottom:1px solid var(--line2);font-size:14px;color:var(--navy);
+ display:flex;align-items:center;gap:8px;background:#fafbfd;border-radius:6px 6px 0 0}
+.card>h3 svg{width:16px;height:16px;color:var(--blue)}
+.card>h3 .ct{margin-left:auto;font-weight:400;font-size:12px;color:var(--mut)}
+.cb{padding:16px}
+
+label{display:block;font-size:12.5px;font-weight:600;color:var(--mut);margin:12px 0 4px}
+label:first-child{margin-top:0}
+input[type=text],input[type=date],input[type=number],select{width:100%;padding:8px 10px;
+ border:1px solid #b9c2ce;border-radius:4px;font:inherit;font-size:14px;background:#fff;color:var(--ink)}
+input:focus,select:focus{outline:0;border-color:var(--blue);box-shadow:0 0 0 3px rgba(26,95,180,.15)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.chk{display:flex;gap:9px;align-items:flex-start;margin:9px 0;font-size:14px;font-weight:400;color:var(--ink);cursor:pointer}
+.chk input{width:16px;height:16px;margin:2px 0 0;flex:none;accent-color:var(--blue);cursor:pointer}
+.chk small{display:block;color:var(--mut);font-size:12px}
+
+.btn{width:100%;margin-top:14px;padding:11px;border:0;border-radius:4px;background:var(--blue);color:#fff;
+ font:inherit;font-size:15px;font-weight:600;cursor:pointer}
+.btn:hover{background:#17529c}
+.btn.alt{background:#fff;color:var(--blue);border:1px solid #b9c2ce;font-weight:500;font-size:14px;padding:9px;margin-top:8px}
+.btn.alt:hover{background:#f0f5fc;border-color:var(--blue)}
+
+#res{max-height:210px;overflow:auto;border:1px solid var(--line);border-radius:4px;margin-top:8px}
+.opt{padding:8px 11px;border-bottom:1px solid var(--line2);cursor:pointer;font-size:13.5px}
+.opt:last-child{border-bottom:0}
+.opt:hover{background:#eef4fc}
+.opt b{display:block;font-weight:600}
+.opt span{color:var(--mut);font-size:12px}
+.chip{display:inline-flex;align-items:center;gap:7px;background:#eef4fc;border:1px solid #bfd4ee;color:var(--navy);
+ border-radius:4px;padding:5px 9px;margin:6px 6px 0 0;font-size:13px}
+.chip x{cursor:pointer;color:var(--blue);font-weight:700}
+
+/* ---- result banner ---- */
+.ban{border-radius:6px;border:1px solid;padding:16px 18px;margin-bottom:16px;display:flex;gap:14px;align-items:flex-start}
+.ban svg{width:26px;height:26px;flex:none;margin-top:2px}
+.b-ELIGIBLE{background:var(--grnbg);border-color:#a9d4b8;color:var(--grn)}
+.b-ARGUABLE{background:var(--ambbg);border-color:#e8cd96;color:var(--amb)}
+.b-CONTESTED{background:var(--redbg);border-color:#e3b0b3;color:var(--red)}
+.ban h2{font-size:20px}
+.ban p{margin:4px 0 0;color:var(--ink);font-size:14.5px;max-width:74ch;font-weight:400}
+
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:16px}
+.fact{background:var(--white);border:1px solid var(--line);border-radius:6px;padding:11px 14px}
+.fact .k{font-size:11.5px;color:var(--mut);text-transform:uppercase;letter-spacing:.04em}
+.fact .v{font-size:19px;font-weight:600;color:var(--navy);margin-top:2px}
+
+table{width:100%;border-collapse:collapse}
+th{background:#f3f6fa;text-align:left;padding:9px 12px;font-size:12px;color:var(--navy);
+ border-bottom:1px solid var(--line);white-space:nowrap;font-weight:600}
+td{padding:10px 12px;border-bottom:1px solid var(--line2);font-size:14px;vertical-align:top}
+tr:last-child td{border-bottom:0}
+tbody tr:hover{background:#f7fafd}
+.sm{font-size:12.5px;color:var(--mut)}
+.tag{display:inline-block;padding:2px 8px;border-radius:3px;font-size:11.5px;font-weight:600}
+.t-g{background:var(--grnbg);color:var(--grn)}.t-r{background:var(--redbg);color:var(--red)}
+.t-a{background:var(--ambbg);color:var(--amb)}.t-n{background:#eef1f5;color:var(--mut)}
+
+.note{border-left:3px solid var(--blue);background:#f2f7fd;padding:10px 13px;margin:10px 0;font-size:13.5px;border-radius:0 4px 4px 0}
+.warn{border-left:3px solid var(--red);background:var(--redbg);padding:10px 13px;margin:10px 0;font-size:13.5px;border-radius:0 4px 4px 0}
+.ok{border-left:3px solid var(--grn);background:var(--grnbg);padding:10px 13px;margin:10px 0;font-size:13.5px;border-radius:0 4px 4px 0}
+
+.route{border:1px solid var(--line);border-left:4px solid var(--blue);border-radius:0 4px 4px 0;padding:12px 14px;margin:10px 0;background:#fff}
+.route h4{font-size:15.5px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.route p{margin:5px 0 0;font-size:13.8px;color:var(--mut)}
+.route .st{font-size:11px;font-weight:700;padding:2px 8px;border-radius:3px;text-transform:uppercase}
+
+.g{margin:14px 0}
+.g .h{display:flex;justify-content:space-between;font-size:14px;margin-bottom:5px}
+.g .h b{font-weight:600}
+.bar{height:10px;background:#e9edf3;border-radius:5px;overflow:hidden}
+.bar i{display:block;height:100%;border-radius:5px}
+.g ul{margin:7px 0 0;padding-left:18px;font-size:13px;color:var(--mut)}
+.g li{margin:2px 0}
+
+.clk{height:26px;background:#e9edf3;border-radius:4px;position:relative;overflow:hidden;margin:10px 0 6px}
+.clk i{display:block;height:100%}
+.clk .m{position:absolute;top:0;bottom:0;width:2px;background:var(--red)}
+.scale{display:flex;justify-content:space-between;font-size:12px;color:var(--mut)}
+
+.steps{list-style:none;margin:0;padding:0}
+.steps li{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--line2)}
+.steps li:last-child{border-bottom:0}
+.steps .n{width:26px;height:26px;border-radius:50%;flex:none;display:grid;place-items:center;
+ font-size:13px;font-weight:700;background:#eef1f5;color:var(--mut)}
+.steps li.done .n{background:var(--grn);color:#fff}
+.steps li.now .n{background:var(--blue);color:#fff}
+.steps b{font-size:15px}
+.steps span{display:block;font-size:13.5px;color:var(--mut);margin-top:1px}
+
+.cite{padding:11px 0;border-bottom:1px solid var(--line2)}
+.cite:last-child{border-bottom:0}
+.cite b{color:var(--navy);font-size:14px}
+.cite p{margin:2px 0 0;font-size:13.5px;color:var(--mut)}
+
+.tr{font-size:13.5px}
+.tr tr td:first-child{font-weight:600;color:var(--navy);width:250px}
+
+pre{white-space:pre-wrap;font:13px/1.7 ui-monospace,Consolas,monospace;background:#fafbfd;
+ border:1px solid var(--line);border-radius:4px;padding:15px;margin:0;color:var(--ink)}
+
+.empty{text-align:center;padding:70px 24px;color:var(--mut)}
+.empty svg{width:46px;height:46px;color:#c3ccd8;margin-bottom:12px}
+.empty h3{font-size:18px;color:var(--ink);font-weight:600}
+.empty p{margin:6px auto 0;max-width:46ch;font-size:14px}
+.rl{cursor:pointer}
+footer{background:var(--navy);color:#b9c8dd;font-size:12.5px;padding:18px 0;margin-top:auto}
+footer b{color:#fff}
+.hide{display:none!important}
+@media print{.top,nav,#side,footer,.btn{display:none}.grid{grid-template-columns:1fr}body{background:#fff}}
+</style>
+</head>
+<body>
+
+<svg class="hide"><defs>
+<g id="ic-user" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="8" r="3.5"/><path d="M5 20a7 7 0 0 1 14 0"/></g>
+<g id="ic-case" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><rect x="3" y="7.5" width="18" height="12.5" rx="1.5"/><path d="M9 7.5V6a1.5 1.5 0 0 1 1.5-1.5h3A1.5 1.5 0 0 1 15 6v1.5M3 13h18"/></g>
+<g id="ic-gavel" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m14.8 3.2 6 6-2.6 2.6-6-6zM4 20h9M6.5 17.4l7.6-7.6"/></g>
+<g id="ic-list" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M8 6h13M8 12h13M8 18h13M3.5 6h.01M3.5 12h.01M3.5 18h.01"/></g>
+<g id="ic-book" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M4 4.5h5.6A2.4 2.4 0 0 1 12 6.9V20a2 2 0 0 0-2-2H4zM20 4.5h-5.6A2.4 2.4 0 0 0 12 6.9V20a2 2 0 0 1 2-2h6z"/></g>
+<g id="ic-clock" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="8.4"/><path d="M12 7.4V12l3.2 2"/></g>
+<g id="ic-scale" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v17M7 21h10M5 8h14M12 6 5 8l-2.2 5.4a3 3 0 0 0 4.4 0zm0 0 7 2 2.2 5.4a3 3 0 0 1-4.4 0z"/></g>
+<g id="ic-check" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m8 12.3 2.7 2.7L16 9.6"/></g>
+<g id="ic-warn" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M12 3.6 1.8 20.4h20.4z"/><path d="M12 9.6v4.8M12 17.6h.01"/></g>
+<g id="ic-info" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.8h.01"/></g>
+<g id="ic-doc" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M13.4 3H6.6A1.6 1.6 0 0 0 5 4.6v14.8A1.6 1.6 0 0 0 6.6 21h10.8a1.6 1.6 0 0 0 1.6-1.6V8.4z"/><path d="M13.4 3v5.4H19M8.4 13h7M8.4 16.6h4.6"/></g>
+<g id="ic-shield" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M12 3 5 5.8v5.4c0 4.4 3 7.9 7 9.8 4-1.9 7-5.4 7-9.8V5.8z"/></g>
+</defs></svg>
+
+<div class="top"><div class="wrap"><span>भारत सरकार | Government of India</span><span data-i18n="Ministry of Law &amp; Justice · Department of Justice">Ministry of Law &amp; Justice · Department of Justice</span></div></div>
+<div class="tri"></div>
+
+<div class="mast"><div class="wrap">
+ <svg class="emblem" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+  <path d="M24 6v32M14 38h20M9 15h30M24 11 9 15l-4.6 11a6.4 6.4 0 0 0 9.2 0zM24 11l15 4 4.6 11a6.4 6.4 0 0 1-9.2 0z"/>
+  <circle cx="24" cy="7" r="2.4" fill="currentColor" stroke="none"/></svg>
+ <div>
+  <h1 data-i18n="Bail Reckoner">Bail Reckoner</h1>
+  <div class="hi" id="sub" data-i18n="Undertrial bail eligibility &amp; decision support system">Undertrial bail eligibility &amp; decision support system</div>
+ </div>
+ <div class="org"><b>राष्ट्रीय विधिक सेवा प्राधिकरण</b><span data-i18n="National Legal Services Authority">National Legal Services Authority</span><br><span data-i18n="Helpline 15100">Helpline 15100</span></div>
+ <div class="langsw"><button data-l="en" class="on">English</button><button data-l="hi">हिंदी</button></div>
+</div></div>
+
+<nav><div class="wrap">
+ <button data-v="check" class="on"><svg><use href="#ic-case"/></svg><span data-i18n="Check Eligibility">Check Eligibility</span></button>
+ <button data-v="roster"><svg><use href="#ic-list"/></svg><span data-i18n="Jail Roster Screening">Jail Roster Screening</span></button>
+ <button data-v="acts"><svg><use href="#ic-book"/></svg><span data-i18n="Acts &amp; Sections">Acts &amp; Sections</span></button>
+</div></nav>
+
+<div class="wrap"><div class="grid" id="grid">
+ <div id="side">
+  <div class="card"><h3><svg><use href="#ic-user"/></svg><span data-i18n="Viewing as">Viewing as</span><span class="ct" id="rl"></span></h3><div class="cb">
+   <select id="role">
+    <option value="prisoner" data-i18n="Undertrial prisoner / family">Undertrial prisoner / family</option>
+    <option value="lawyer" selected data-i18n="Legal aid provider">Legal aid provider</option>
+    <option value="judge" data-i18n="Judicial authority">Judicial authority</option>
+   </select>
+   <div class="sm" id="rdesc" style="margin-top:8px"></div>
+  </div></div>
+
+  <div class="card"><h3><svg><use href="#ic-book"/></svg><span data-i18n="1. Charges">1. Charges</span><span class="ct" id="cn">0 selected</span></h3><div class="cb">
+   <label data-i18n="Search section, Act or offence">Search section, Act or offence</label>
+   <input type="text" id="q" placeholder="e.g. 420, POCSO, NDPS, 66D">
+   <label data-i18n="Class of offence">Class of offence</label>
+   <select id="cat">
+    <option value="" data-i18n="All classes">All classes</option>
+    <option value="general" data-i18n="General (IPC / BNS)">General (IPC / BNS)</option>
+    <option value="cyber" data-i18n="Cyber crimes">Cyber crimes</option>
+    <option value="scst" data-i18n="Crimes against SC &amp; ST">Crimes against SC &amp; ST</option>
+    <option value="women" data-i18n="Crimes against women">Crimes against women</option>
+    <option value="children" data-i18n="Crimes against children">Crimes against children</option>
+    <option value="state" data-i18n="Offences against the State">Offences against the State</option>
+    <option value="economic" data-i18n="Economic offences">Economic offences</option>
+    <option value="foreigner" data-i18n="Crimes involving foreigners">Crimes involving foreigners</option>
+   </select>
+   <div id="res"></div><div id="chips"></div>
+  </div></div>
+
+  <div class="card"><h3><svg><use href="#ic-clock"/></svg><span data-i18n="2. Custody details">2. Custody details</span></h3><div class="cb">
+   <div class="two">
+    <div><label data-i18n="Date of arrest">Date of arrest</label><input type="date" id="custody"></div>
+    <div><label data-i18n="Calculate as on">Calculate as on</label><input type="date" id="asof"></div>
+   </div>
+   <label class="chk"><input type="checkbox" id="cs"><span data-i18n="Charge-sheet filed">Charge-sheet filed</span></label>
+   <label class="chk"><input type="checkbox" id="trial"><span data-i18n="Trial has begun">Trial has begun</span></label>
+   <label class="chk"><input type="checkbox" id="multi"><span data-i18n="Cases pending in more than one offence">Cases pending in more than one offence</span></label>
+   <label class="chk"><input type="checkbox" id="first" checked><span data-i18n="First-time offender">First-time offender</span><small data-i18n="Attracts the one-third rule, s.479 BNSS">Attracts the one-third rule, s.479 BNSS</small></label>
+   <div class="two">
+    <div><label data-i18n="Age">Age</label><input type="number" id="age" value="32"></div>
+    <div><label data-i18n="Gender">Gender</label><select id="gender"><option value="M" data-i18n="Male">Male</option><option value="F" data-i18n="Female">Female</option><option value="O" data-i18n="Other">Other</option></select></div>
+   </div>
+   <div class="two">
+    <div><label data-i18n="Prior convictions">Prior convictions</label><input type="number" id="prior" value="0" min="0"></div>
+    <div><label data-i18n="Amount involved (₹)">Amount involved (₹)</label><input type="number" id="amt" value="0" min="0"></div>
+   </div>
+  </div></div>
+
+  <div class="card"><h3><svg><use href="#ic-shield"/></svg><span data-i18n="3. Other factors">3. Other factors</span></h3><div class="cb">
+   <label class="chk"><input type="checkbox" id="foreign"><span data-i18n="Foreign national">Foreign national</span></label>
+   <label class="chk"><input type="checkbox" id="passport"><span data-i18n="Passport surrendered">Passport surrendered</span></label>
+   <label class="chk"><input type="checkbox" id="ties" checked><span data-i18n="Verified address &amp; family ties">Verified address &amp; family ties</span></label>
+   <label class="chk"><input type="checkbox" id="abscond"><span data-i18n="Previously absconded">Previously absconded</span></label>
+   <label class="chk"><input type="checkbox" id="threat"><span data-i18n="Alleged threat to a witness">Alleged threat to a witness</span></label>
+   <label class="chk"><input type="checkbox" id="influ"><span data-i18n="Position of power or influence">Position of power or influence</span></label>
+   <label class="chk"><input type="checkbox" id="victim"><span data-i18n="Known to the victim">Known to the victim</span></label>
+   <label class="chk"><input type="checkbox" id="sick"><span data-i18n="Sick, infirm or disabled">Sick, infirm or disabled</span></label>
+   <label class="chk"><input type="checkbox" id="indigent" checked><span data-i18n="Cannot afford a surety">Cannot afford a surety</span></label>
+   <button class="btn" id="go" data-i18n="Check Bail Eligibility">Check Bail Eligibility</button>
+   <button class="btn alt" id="demo" data-i18n="Load sample case">Load sample case</button>
+   <button class="btn alt" id="print" data-i18n="Print / save as PDF">Print / save as PDF</button>
+  </div></div>
+ </div>
+ <div id="out"></div>
+</div></div>
+
+<footer><div class="wrap">
+ <b data-i18n="Disclaimer.">Disclaimer.</b> This is a decision-support tool. It does not give legal advice and does not replace the discretion of the court under ss. 437–439 CrPC / ss. 480–483 BNSS, 2023. All provisions shown are indicative and must be verified against the bare Act.
+</div></footer>
+
+<script>
+/* Bail Reckoner — Offence Knowledge Base
+   Fields:
+   id, ipc (IPC 1860 section), bns (Bharatiya Nyaya Sanhita 2023 section),
+   act, title, category, max (max sentence in months; 1200 = life, 9999 = death),
+   min (mandatory minimum in months, 0 if none),
+   cog (cognizable), bail ('Bailable'|'Non-bailable'), comp (compoundable status),
+   court, notes (special bail bars / statutory overrides)
+   Categories: general, cyber, scst, women, children, state, economic, foreigner
+*/
+const LIFE = 1200, DEATH = 9999;
+
+const OFFENCES = [
+  /* ---------- BODY / GENERAL (IPC & BNS) ---------- */
+  {id:"302", ipc:"302", bns:"103(1)", act:"IPC 1860 / BNS 2023", title:"Murder", category:"general", max:DEATH, min:LIFE, cog:true, bail:"Non-bailable", comp:"Non-compoundable", court:"Sessions", notes:["Triable by Sessions; bail only by Sessions/High Court under s.439 CrPC / s.483 BNSS."]},
+  {id:"304", ipc:"304", bns:"105", act:"IPC 1860 / BNS 2023", title:"Culpable homicide not amounting to murder", category:"general", max:LIFE, min:60, cog:true, bail:"Non-bailable", comp:"Non-compoundable", court:"Sessions", notes:[]},
+  {id:"304A", ipc:"304A", bns:"106(1)", act:"IPC 1860 / BNS 2023", title:"Causing death by negligence", category:"general", max:24, min:0, cog:true, bail:"Bailable", comp:"Non-compoundable", court:"Magistrate", notes:["Bailable — bail is a matter of right u/s 436 CrPC / s.478 BNSS."]},
+  {id:"307", ipc:"307", bns:"109", act:"IPC 1860 / BNS 2023", title:"Attempt to murder", category:"general", max:LIFE, min:0, cog:true, bail:"Non-bailable", comp:"Non-compoundable", court:"Sessions", notes:[]},
+  {id:"323", ipc:"323", bns:"115(2)", act:"IPC 1860 / BNS 2023", title:"Voluntarily causing hurt", category:"general", max:12, min:0, cog:false, bail:"Bailable", comp:"Compoundable by the victim", court:"Any Magistrate", notes:["Compoundable without court permission — settlement can end the case."]},
+  {id:"324", ipc:"324", bns:"118(1)", act:"IPC 1860 / BNS 2023", title:"Voluntarily causing hurt by dangerous weapons", category:"general", max:36, min:0, cog:true, bail:"Non-bailable", comp:"Compoundable with Court permission (BNS)", court:"Magistrate", notes:[]},
+  {id:"325", ipc:"325", bns:"117(2)", act:"IPC 1860 / BNS 2023", title:"Voluntarily causing grievous hurt", category:"general", max:84, min:0, cog:true, bail:"Non-bailable", comp:"Compoundable with Court permission", court:"Magistrate", notes:[]},
+  {id:"341", ipc:"341", bns:"126(2)", act:"IPC 1860 / BNS 2023", title:"Wrongful restraint", category:"general", max:1, min:0, cog:true, bail:"Bailable", comp:"Compoundable by the victim", court:"Any Magistrate", notes:["Petty offence — consider release on personal bond / plea of guilt."]},
+  {id:"342", ipc:"342", bns:"127(2)", act:"IPC 1860 / BNS 2023", title:"Wrongful confinement", category:"general", max:12, min:0, cog:true, bail:"Bailable", comp:"Compoundable by the victim", court:"Any Magistrate", notes:[]},
+  {id:"379", ipc:"379", bns:"303(2)", act:"IPC 1860 / BNS 2023", title:"Theft", category:"general", max:36, min:0, cog:true, bail:"Non-bailable", comp:"Compoundable by owner", court:"Any Magistrate", notes:["BNS 303(2): first-time petty theft under Rs.5,000 on restoration — community service possible."]},
+  {id:"380", ipc:"380", bns:"305", act:"IPC 1860 / BNS 2023", title:"Theft in dwelling house", category:"general", max:84, min:0, cog:true, bail:"Non-bailable", comp:"Compoundable by owner", court:"Any Magistrate", notes:[]},
+  {id:"392", ipc:"392", bns:"309(4)", act:"IPC 1860 / BNS 2023", title:"Robbery", category:"general", max:120, min:0, cog:true, bail:"Non-bailable", comp:"Non-compoundable", court:"Magistrate", notes:[]},
+  {id:"395", ipc:"395", bns:"310(2)", act:"IPC 1860 / BNS 2023", title:"Dacoity", category:"general", max:LIFE, min:120, cog:true, bail:"Non-bailable", comp:"Non-compoundable", court:"Sessions", notes:[]},
+  {id:"411", ipc:"411", bns:"317(2)", act:"IPC 1860 / BNS 2023", title:"Receiving stolen property", category:"general", max:36, min:0, cog:true, bail:"Non-bailable", comp:"Compoundable by owner", court:"Any Magistrate", notes:[]},
+  {id:"420", ipc:"420", bns:"318(4)", act:"IPC 1860 / BNS 2023", title:"Cheating and dishonestly inducing delivery of property", category:"economic", max:84, min:0, cog:true, bail:"Non-bailable", comp:"Compoundable with Court permission", court:"Magistrate", notes:["Frequently settled; compounding with court leave is a strong bail/closure route."]},
+  {id:"406", ipc:"406", bns:"316(2)", act:"IPC 1860 / BNS 2023", title:"Criminal breach of trust", category:"economic", max:60, min:0, cog:true, bail:"Non-bailable", comp:"Compoundable with Court permission", court:"Magistrate", notes:[]},
+  {id:"468", ipc:"468", bns:"336(3)", act:"IPC 1860 / BNS 2023", title:"Forgery for purpose of cheating", category:"economic", max:84, min:0, cog:true, bail:"Non-bailable", comp:"Non-compoundable", court:"Magistrate", notes:[]},
+  {id:"471", ipc:"471", bns:"340(2)", act:"IPC 1860 / BNS 2023", title:"Using as genuine a forged document", category:"economic", max:84, min:0, cog:true, bail:"Non-bailable", comp:"Non-compoundable", court:"Magistrate", notes:[]},
+  {id:"498A", ipc:"498A", bns:"85", act:"IPC 1860 / BNS 2023", title:"Cruelty by husband or relatives", category:"women", max:36, min:0, cog:true, bail:"Non-bailable", comp:"Non-compoundable (compoundable in some States)", court:"Magistrate", notes:["Arnesh Kumar v. State of Bihar (2014): notice u/s 41A CrPC / s.35 BNSS instead of arrest for offences ≤ 7 years."]},
+  {id:"506", ipc:"506", bns:"351(2)", act:"IPC 1860 / BNS 2023", title:"Criminal intimidation", category:"general", max:24, min:0, cog:false, bail:"Bailable", comp:"Compoundable by the victim", court:"Any Magistrate", notes:[]},
+  {id:"509", ipc:"509", bns:"79", act:"IPC 1860 / BNS 2023", title:"Word/gesture insulting modesty of a woman", category:"women", max:36, min:0, cog:true, bail:"Bailable", comp:"Non-compoundable", court:"Any Magistrate", notes:[]},
+  {id:"143", ipc:"143", bns:"189(2)", act:"IPC 1860 / BNS 2023", title:"Unlawful assembly", category:"general", max:6, min:0, cog:true, bail:"Bailable", comp:"Non-compoundable", court:"Any Magistrate", notes:[]},
+  {id:"353", ipc:"353", bns:"132", act:"IPC 1860 / BNS 2023", title:"Assault to deter public servant from duty", category:"general", max:24, min:0, cog:true, bail:"Non-bailable", comp:"Non-compoundable", court:"Any Magistrate", notes:[]},
+
+  /* ---------- CRIMES AGAINST WOMEN ---------- */
+  {id:"376", ipc:"376", bns:"64", act:"IPC 1860 / BNS 2023", title:"Rape", category:"women", max:LIFE, min:120, cog:true, bail:"Non-bailable", comp:"Non-compoundable", court:"Sessions", notes:["Mandatory minimum 10 years. Victim must be heard before bail (s.439(1A) CrPC / s.483 BNSS).","Judge's discretion is narrow; bail generally on merits after charge-sheet."]},
+  {id:"376D", ipc:"376D", bns:"70(1)", act:"IPC 1860 / BNS 2023", title:"Gang rape", category:"women", max:LIFE, min:240, cog:true, bail:"Non-bailable", comp:"Non-compoundable", court:"Sessions", notes:["Minimum 20 years extending to life (remainder of natural life)."]},
+  {id:"354", ipc:"354", bns:"74", act:"IPC 1860 / BNS 2023", title:"Assault on woman with intent to outrage modesty", category:"women", max:60, min:12, cog:true, bail:"Non-bailable", comp:"Non-compoundable", court:"Any Magistrate", notes:[]},
+  {id:"354D", ipc:"354D", bns:"78", act:"IPC 1860 / BNS 2023", title:"Stalking", category:"women", max:36, min:0, cog:true, bail:"Bailable (first offence)", comp:"Non-compoundable", court:"Any Magistrate", notes:["First conviction bailable; second/subsequent offence non-bailable, up to 5 years."]},
+  {id:"304B", ipc:"304B", bns:"80(2)", act:"IPC 1860 / BNS 2023", title:"Dowry death", category:"women", max:LIFE, min:84, cog:true, bail:"Non-bailable", comp:"Non-compoundable", court:"Sessions", notes:["Presumption u/s 113B Indian Evidence Act / s.118 BSA 2023 applies."]},
+  {id:"DP3", ipc:"—", bns:"—", act:"Dowry Prohibition Act, 1961 s.3", title:"Giving or taking dowry", category:"women", max:60, min:60, cog:true, bail:"Non-bailable", comp:"Non-compoundable", court:"Magistrate", notes:["Minimum 5 years and fine of Rs.15,000 or amount of dowry."]},
+  {id:"DV", ipc:"—", bns:"—", act:"PWDVA 2005 s.31", title:"Breach of protection order", category:"women", max:12, min:0, cog:true, bail:"Bailable", comp:"Non-compoundable", court:"Magistrate", notes:[]},
+
+  /* ---------- CRIMES AGAINST CHILDREN ---------- */
+  {id:"POCSO4", ipc:"—", bns:"65", act:"POCSO Act 2012 s.4", title:"Penetrative sexual assault on a child", category:"children", max:LIFE, min:240, cog:true, bail:"Non-bailable", comp:"Non-compoundable", court:"Special (POCSO) Court", notes:["Minimum 20 years where child under 16. Presumption of guilt u/s 29 POCSO shifts burden once foundational facts are shown.","Bail only from Special Court/High Court; child's interest is paramount."]},
+  {id:"POCSO8", ipc:"—", bns:"—", act:"POCSO Act 2012 s.8", title:"Sexual assault on a child", category:"children", max:60, min:36, cog:true, bail:"Non-bailable", comp:"Non-compoundable", court:"Special (POCSO) Court", notes:[]},
+  {id:"POCSO12", ipc:"—", bns:"—", act:"POCSO Act 2012 s.12", title:"Sexual harassment of a child", category:"children", max:36, min:0, cog:true, bail:"Non-bailable", comp:"Non-compoundable", court:"Special (POCSO) Court", notes:[]},
+  {id:"POCSO15", ipc:"—", bns:"—", act:"POCSO Act 2012 s.15", title:"Storage/possession of child pornographic material", category:"children", max:60, min:0, cog:true, bail:"Non-bailable", comp:"Non-compoundable", court:"Special (POCSO) Court", notes:["Read with s.67B IT Act, 2000."]},
+  {id:"JJ75", ipc:"—", bns:"—", act:"Juvenile Justice Act 2015 s.75", title:"Cruelty to a child", category:"children", max:60, min:0, cog:true, bail:"Non-bailable", comp:"Non-compoundable", court:"Magistrate / CWC", notes:[]},
+  {id:"CL14", ipc:"—", bns:"—", act:"Child Labour (P&R) Act 1986 s.14", title:"Employment of child in hazardous work", category:"children", max:24, min:6, cog:true, bail:"Non-bailable", comp:"Non-compoundable", court:"Magistrate", notes:[]},
+  {id:"363", ipc:"363", bns:"137(2)", act:"IPC 1860 / BNS 2023", title:"Kidnapping", category:"children", max:84, min:0, cog:true, bail:"Non-bailable", comp:"Non-compoundable", court:"Magistrate", notes:[]},
+  {id:"370", ipc:"370", bns:"143(2)", act:"IPC 1860 / BNS 2023", title:"Trafficking of persons", category:"children", max:120, min:84, cog:true, bail:"Non-bailable", comp:"Non-compoundable", court:"Sessions", notes:["Higher punishment where victim is a minor — up to life."]},
+
+  /* ---------- SC/ST ---------- */
+  {id:"SCST3_1", ipc:"—", bns:"—", act:"SC/ST (PoA) Act 1989 s.3(1)", title:"Atrocity against a member of SC/ST (humiliation, assault, etc.)", category:"scst", max:60, min:6, cog:true, bail:"Non-bailable", comp:"Non-compoundable", court:"Special Court", notes:["s.18 bars anticipatory bail (s.438 CrPC / s.482 BNSS). Regular bail u/s 439 CrPC / s.483 BNSS is still available.","Appeal against bail order lies to High Court u/s 14A(2) of the Act.","Prathvi Raj Chauhan v. UOI (2020) upheld s.18A; bar does not apply if complaint prima facie makes out no offence."]},
+  {id:"SCST3_2", ipc:"—", bns:"—", act:"SC/ST (PoA) Act 1989 s.3(2)(v)", title:"IPC/BNS offence (10 yrs+) committed on ground of caste", category:"scst", max:LIFE, min:120, cog:true, bail:"Non-bailable", comp:"Non-compoundable", court:"Special Court", notes:["Attracts imprisonment for life plus fine."]},
+  {id:"PCR7", ipc:"—", bns:"—", act:"Protection of Civil Rights Act 1955 s.7", title:"Enforcing untouchability disability", category:"scst", max:6, min:1, cog:true, bail:"Bailable", comp:"Non-compoundable", court:"Magistrate", notes:[]},
+
+  /* ---------- CYBER ---------- */
+  {id:"IT66", ipc:"—", bns:"—", act:"IT Act 2000 s.66", title:"Computer related offences (hacking)", category:"cyber", max:36, min:0, cog:true, bail:"Bailable", comp:"Compoundable u/s 77A IT Act", court:"Magistrate", notes:["s.77A allows compounding of offences other than those punishable with life/over 3 years."]},
+  {id:"IT66C", ipc:"—", bns:"—", act:"IT Act 2000 s.66C", title:"Identity theft", category:"cyber", max:36, min:0, cog:true, bail:"Bailable", comp:"Compoundable u/s 77A", court:"Magistrate", notes:[]},
+  {id:"IT66D", ipc:"—", bns:"—", act:"IT Act 2000 s.66D", title:"Cheating by personation using computer resource", category:"cyber", max:36, min:0, cog:true, bail:"Bailable", comp:"Compoundable u/s 77A", court:"Magistrate", notes:["Usually charged with BNS 318(4)/IPC 420, which is non-bailable — the graver section governs."]},
+  {id:"IT66E", ipc:"—", bns:"—", act:"IT Act 2000 s.66E", title:"Violation of privacy (capturing private images)", category:"cyber", max:36, min:0, cog:true, bail:"Bailable", comp:"Compoundable u/s 77A", court:"Magistrate", notes:[]},
+  {id:"IT66F", ipc:"—", bns:"—", act:"IT Act 2000 s.66F", title:"Cyber terrorism", category:"cyber", max:LIFE, min:0, cog:true, bail:"Non-bailable", comp:"Non-compoundable", court:"Sessions", notes:["Punishable with imprisonment for life; treated at par with terror offences for bail."]},
+  {id:"IT67", ipc:"—", bns:"—", act:"IT Act 2000 s.67", title:"Publishing obscene material in electronic form", category:"cyber", max:36, min:0, cog:true, bail:"Bailable", comp:"Compoundable u/s 77A", court:"Magistrate", notes:["Second conviction: 5 years — non-bailable."]},
+  {id:"IT67B", ipc:"—", bns:"—", act:"IT Act 2000 s.67B", title:"Child sexually abusive material in electronic form", category:"cyber", max:60, min:0, cog:true, bail:"Non-bailable", comp:"Non-compoundable", court:"Magistrate / Special Court", notes:["Read with POCSO s.15."]},
+  {id:"BNS319", ipc:"419", bns:"319(2)", act:"BNS 2023 s.319", title:"Cheating by personation (incl. online)", category:"cyber", max:60, min:0, cog:true, bail:"Non-bailable", comp:"Compoundable with Court permission", court:"Magistrate", notes:[]},
+  {id:"BNS111", ipc:"—", bns:"111", act:"BNS 2023 s.111", title:"Organised crime (incl. cyber-crime syndicates)", category:"cyber", max:LIFE, min:60, cog:true, bail:"Non-bailable", comp:"Non-compoundable", court:"Sessions", notes:["New offence under BNS; stringent, minimum 5 years."]},
+
+  /* ---------- OFFENCES AGAINST THE STATE ---------- */
+  {id:"BNS147", ipc:"121", bns:"147", act:"IPC 1860 / BNS 2023", title:"Waging war against the Government of India", category:"state", max:DEATH, min:LIFE, cog:true, bail:"Non-bailable", comp:"Non-compoundable", court:"Sessions", notes:[]},
+  {id:"BNS152", ipc:"124A", bns:"152", act:"BNS 2023 s.152 (replaces sedition)", title:"Acts endangering sovereignty, unity and integrity of India", category:"state", max:LIFE, min:84, cog:true, bail:"Non-bailable", comp:"Non-compoundable", court:"Sessions", notes:["S.G. Vombatkere v. UOI (2022): IPC 124A proceedings kept in abeyance; BNS 152 is the successor provision."]},
+  {id:"UAPA13", ipc:"—", bns:"—", act:"UAPA 1967 s.13", title:"Unlawful activity", category:"state", max:84, min:0, cog:true, bail:"Non-bailable", comp:"Non-compoundable", court:"Special Court", notes:["s.43D(5) bar applies to Ch.IV & VI offences."]},
+  {id:"UAPA16", ipc:"—", bns:"—", act:"UAPA 1967 s.16", title:"Terrorist act", category:"state", max:DEATH, min:60, cog:true, bail:"Non-bailable", comp:"Non-compoundable", court:"Special Court (NIA)", notes:["s.43D(5): bail barred if court is of opinion that accusation is prima facie true — NIA v. Zahoor Ahmad Shah Watali (2019).","But Union of India v. K.A. Najeeb (2021): long incarceration + unlikelihood of early trial permits bail despite s.43D(5) (Art.21).","Default bail period extended to 180 days u/s 43D(2)."]},
+  {id:"UAPA20", ipc:"—", bns:"—", act:"UAPA 1967 s.20", title:"Member of a terrorist gang or organisation", category:"state", max:LIFE, min:0, cog:true, bail:"Non-bailable", comp:"Non-compoundable", court:"Special Court (NIA)", notes:["s.43D(5) bar applies."]},
+  {id:"OSA3", ipc:"—", bns:"—", act:"Official Secrets Act 1923 s.3", title:"Spying", category:"state", max:168, min:0, cog:true, bail:"Non-bailable", comp:"Non-compoundable", court:"Sessions", notes:[]},
+  {id:"EXPL4", ipc:"—", bns:"—", act:"Explosive Substances Act 1908 s.4", title:"Attempt to cause explosion", category:"state", max:LIFE, min:0, cog:true, bail:"Non-bailable", comp:"Non-compoundable", court:"Sessions", notes:["Sanction u/s 7 required for prosecution."]},
+
+  /* ---------- ECONOMIC ---------- */
+  {id:"PMLA4", ipc:"—", bns:"—", act:"PMLA 2002 s.4", title:"Money laundering", category:"economic", max:84, min:36, cog:true, bail:"Non-bailable", comp:"Non-compoundable", court:"Special Court", notes:["Twin conditions u/s 45 PMLA — upheld in Vijay Madanlal Choudhary v. UOI (2022).","Proviso: woman, person under 16, sick or infirm, or amount involved < Rs.1 crore may be released without twin conditions.","Manish Sisodia v. ED (2024): prolonged incarceration without trial overrides statutory rigours."]},
+  {id:"NDPS21C", ipc:"—", bns:"—", act:"NDPS Act 1985 s.21(c)", title:"Commercial quantity — narcotic drug", category:"economic", max:240, min:120, cog:true, bail:"Non-bailable", comp:"Non-compoundable", court:"Special Court", notes:["s.37 twin conditions: reasonable grounds to believe not guilty + unlikely to reoffend.","Rhea Chakraborty v. UOI (2020): s.37 rigour does not apply to small quantity.","Mohd Muslim v. State (NCT of Delhi) (2023): undue delay in trial is a ground for bail despite s.37."]},
+  {id:"NDPS21B", ipc:"—", bns:"—", act:"NDPS Act 1985 s.21(b)", title:"Intermediate quantity — narcotic drug", category:"economic", max:120, min:0, cog:true, bail:"Non-bailable", comp:"Non-compoundable", court:"Special Court", notes:["s.37 bar does NOT apply — ordinary bail principles govern."]},
+  {id:"NDPS21A", ipc:"—", bns:"—", act:"NDPS Act 1985 s.21(a)", title:"Small quantity — narcotic drug", category:"economic", max:12, min:0, cog:true, bail:"Bailable in practice (≤1 yr)", comp:"Non-compoundable", court:"Special Court", notes:["s.37 not attracted; bail generally granted."]},
+  {id:"PC7", ipc:"—", bns:"—", act:"Prevention of Corruption Act 1988 s.7", title:"Public servant taking undue advantage", category:"economic", max:84, min:36, cog:true, bail:"Non-bailable", comp:"Non-compoundable", court:"Special Judge", notes:["Sanction u/s 19 required; s.17A approval for inquiry."]},
+  {id:"PC13", ipc:"—", bns:"—", act:"Prevention of Corruption Act 1988 s.13", title:"Criminal misconduct by a public servant", category:"economic", max:84, min:48, cog:true, bail:"Non-bailable", comp:"Non-compoundable", court:"Special Judge", notes:[]},
+  {id:"NI138", ipc:"—", bns:"—", act:"Negotiable Instruments Act 1881 s.138", title:"Dishonour of cheque", category:"economic", max:24, min:0, cog:false, bail:"Bailable", comp:"Compoundable u/s 147 NI Act", court:"Magistrate", notes:["Fully compoundable at any stage — Damodar S. Prabhu v. Sayed Babalal H. (2010) compounding-cost schedule.","Summons case; personal bond usually sufficient."]},
+  {id:"CUS135", ipc:"—", bns:"—", act:"Customs Act 1962 s.135", title:"Evasion of duty / smuggling", category:"economic", max:84, min:0, cog:true, bail:"Non-bailable (if value > Rs.1 crore)", comp:"Compoundable u/s 137(3)", court:"Magistrate", notes:["Below threshold the offence is bailable and non-cognizable."]},
+  {id:"GST132", ipc:"—", bns:"—", act:"CGST Act 2017 s.132", title:"Tax evasion / fake invoicing above Rs.5 crore", category:"economic", max:60, min:0, cog:true, bail:"Non-bailable", comp:"Compoundable u/s 138", court:"Magistrate", notes:["Below Rs.5 crore: bailable and non-cognizable."]},
+  {id:"FERA_FEMA", ipc:"—", bns:"—", act:"FEMA 1999", title:"Foreign exchange contravention", category:"economic", max:0, min:0, cog:false, bail:"Civil — no arrest", comp:"Compoundable", court:"Adjudicating Authority", notes:["FEMA contraventions are civil; no custody arises."]},
+  {id:"BUDA", ipc:"—", bns:"—", act:"Banning of Unregulated Deposit Schemes Act 2019 s.21", title:"Fraudulent default in deposit repayment", category:"economic", max:120, min:60, cog:true, bail:"Non-bailable", comp:"Non-compoundable", court:"Designated Court", notes:[]},
+
+  /* ---------- FOREIGNERS ---------- */
+  {id:"FA14", ipc:"—", bns:"—", act:"Foreigners Act 1946 s.14", title:"Overstay / entry without valid visa", category:"foreigner", max:60, min:24, cog:true, bail:"Non-bailable", comp:"Non-compoundable", court:"Magistrate", notes:["Minimum 2 years. After sentence, detention pending deportation is common — coordinate with FRRO and the Embassy.","Consular access must be offered — Vienna Convention on Consular Relations, Art. 36."]},
+  {id:"FA14A", ipc:"—", bns:"—", act:"Foreigners Act 1946 s.14A", title:"Entry into a restricted/protected area", category:"foreigner", max:96, min:24, cog:true, bail:"Non-bailable", comp:"Non-compoundable", court:"Magistrate", notes:[]},
+  {id:"PASS3", ipc:"—", bns:"—", act:"Passport (Entry into India) Act 1920 s.3", title:"Entry without a valid passport", category:"foreigner", max:3, min:0, cog:true, bail:"Bailable", comp:"Non-compoundable", court:"Magistrate", notes:[]},
+  {id:"FRGN_VIC", ipc:"—", bns:"—", act:"BNS 2023 (offence against a foreign national)", title:"Offence committed against a foreign tourist", category:"foreigner", max:84, min:0, cog:true, bail:"Non-bailable", comp:"Non-compoundable", court:"Magistrate / Sessions", notes:["Fast-track trial directions apply in several States; victim may need video-conference evidence u/s 530 BNSS."]}
+];
+
+/* Judicial pronouncements knowledge base */
+const CASELAW = [
+  {case:"Hussainara Khatoon v. State of Bihar (1979) 3 SCC 532", holding:"Speedy trial is a fundamental right under Article 21; undertrials detained beyond the maximum sentence must be released.", tags:["all"]},
+  {case:"Gudikanti Narasimhulu v. Public Prosecutor (1978) 1 SCC 240", holding:"Bail is the rule, jail the exception; personal liberty is a constitutional value.", tags:["all"]},
+  {case:"Sanjay Chandra v. CBI (2012) 1 SCC 40", holding:"In economic offences, seriousness alone cannot justify pre-trial detention; conditions can secure attendance.", tags:["economic"]},
+  {case:"Arnesh Kumar v. State of Bihar (2014) 8 SCC 273", holding:"For offences punishable up to 7 years, arrest is not automatic; s.41A CrPC / s.35 BNSS notice must be issued.", tags:["all"]},
+  {case:"Satender Kumar Antil v. CBI (2022) 10 SCC 51", holding:"Lays down category A–D framework; bail applications to be decided within 2 weeks; non-arrest during investigation entitles the accused to bail on filing of charge-sheet.", tags:["all"]},
+  {case:"Union of India v. K.A. Najeeb (2021) 3 SCC 713", holding:"Statutory bail bars (UAPA s.43D(5)) yield to Article 21 where trial is unlikely to conclude in reasonable time.", tags:["state"]},
+  {case:"NIA v. Zahoor Ahmad Shah Watali (2019) 5 SCC 1", holding:"Under UAPA s.43D(5) the court examines the material on its face without a detailed merits analysis.", tags:["state"]},
+  {case:"Vijay Madanlal Choudhary v. UOI (2022) SCC OnLine SC 929", holding:"PMLA s.45 twin conditions upheld as valid.", tags:["economic"]},
+  {case:"Manish Sisodia v. Directorate of Enforcement (2024)", holding:"Prolonged incarceration without commencement of trial defeats the purpose of custody; bail must follow.", tags:["economic"]},
+  {case:"Mohd Muslim @ Hussain v. State (NCT of Delhi) (2023)", holding:"NDPS s.37 cannot be used to keep an undertrial in indefinite custody where trial is delayed.", tags:["economic"]},
+  {case:"Prathvi Raj Chauhan v. Union of India (2020) 4 SCC 727", holding:"SC/ST Act s.18A upheld; anticipatory bail bar does not operate where no prima facie case is made out.", tags:["scst"]},
+  {case:"Bhim Singh v. Union of India (2015) 13 SCC 605", holding:"Directions for implementation of s.436A CrPC — jurisdictional magistrates to hold sittings in jails and release eligible undertrials.", tags:["all"]},
+  {case:"In Re: Inhuman Conditions in 1382 Prisons (2016) 3 SCC 700", holding:"Undertrial Review Committees in every district must meet quarterly to identify prisoners eligible for release.", tags:["all"]},
+  {case:"Moti Ram v. State of MP (1978) 4 SCC 47", holding:"Excessive surety amounts are unconstitutional; indigence cannot be a ground for continued detention.", tags:["all"]},
+  {case:"Motiram / Sukhwant Singh v. State of Punjab (2009) 7 SCC 559", holding:"Courts should ordinarily consider release on personal bond without sureties where the accused is indigent.", tags:["all"]},
+  {case:"S.G. Vombatkere v. Union of India (2022) 7 SCC 433", holding:"Sedition prosecutions under IPC 124A kept in abeyance; pending accused entitled to seek bail.", tags:["state"]},
+  {case:"Dataram Singh v. State of UP (2018) 3 SCC 22", holding:"An accused is presumed innocent; bail should not be denied as punishment.", tags:["all"]},
+  {case:"P. Chidambaram v. Directorate of Enforcement (2019) 9 SCC 24", holding:"Triple test — flight risk, tampering with evidence, influencing witnesses — governs bail.", tags:["all"]}
+];
+/* Synthetic Undertrial Review Committee roster — demonstrates batch screening.
+   In production this binds to the ePrisons / ICJS undertrial register. No real data. */
+function _ago(m){var d=new Date();d.setMonth(d.getMonth()-m);return d.toISOString().slice(0,10)}
+const ROSTER = [
+  {id:"UT/2024/0117", name:"Rameshwar Yadav", jail:"Central Jail, Patiala", chargeIds:["379","411"], custodyStart:_ago(19), chargeSheetFiled:true, trialStarted:true, firstTimeOffender:true, age:29, gender:"M", localTies:true, indigent:true, priorConvictions:0},
+  {id:"UT/2023/0942", name:"Sukhwinder Kaur", jail:"District Jail, Ludhiana", chargeIds:["NI138"], custodyStart:_ago(11), chargeSheetFiled:true, trialStarted:false, firstTimeOffender:true, age:44, gender:"F", localTies:true, indigent:true, priorConvictions:0},
+  {id:"UT/2025/0031", name:"Imran Sheikh", jail:"Central Jail, Amritsar", chargeIds:["420","406","IT66D"], custodyStart:_ago(15), chargeSheetFiled:true, trialStarted:false, firstTimeOffender:true, age:33, gender:"M", localTies:true, indigent:true, amountInvolved:850000},
+  {id:"UT/2022/0488", name:"Balbir Singh", jail:"Central Jail, Patiala", chargeIds:["302"], custodyStart:_ago(52), chargeSheetFiled:true, trialStarted:true, firstTimeOffender:false, age:51, gender:"M", localTies:true, priorConvictions:1, victimRelated:true},
+  {id:"UT/2024/0663", name:"Nasir Khan", jail:"District Jail, Ferozepur", chargeIds:["NDPS21B"], custodyStart:_ago(22), chargeSheetFiled:true, trialStarted:false, firstTimeOffender:true, age:26, gender:"M", localTies:false, indigent:true},
+  {id:"UT/2025/0210", name:"Peter Achieng", jail:"Central Jail, Amritsar", chargeIds:["FA14"], custodyStart:_ago(27), chargeSheetFiled:true, trialStarted:true, firstTimeOffender:true, age:35, gender:"M", foreignNational:true, localTies:false, indigent:true},
+  {id:"UT/2023/0755", name:"Gurpreet Singh", jail:"District Jail, Sangrur", chargeIds:["324","506"], custodyStart:_ago(14), chargeSheetFiled:true, trialStarted:true, firstTimeOffender:true, age:23, gender:"M", localTies:true, indigent:true},
+  {id:"UT/2025/0402", name:"Anil Kumar", jail:"Central Jail, Patiala", chargeIds:["UAPA16"], custodyStart:_ago(7), chargeSheetFiled:false, trialStarted:false, firstTimeOffender:true, age:31, gender:"M", localTies:true},
+  {id:"UT/2024/0299", name:"Shabana Begum", jail:"Women's Jail, Ludhiana", chargeIds:["PMLA4"], custodyStart:_ago(20), chargeSheetFiled:true, trialStarted:false, firstTimeOffender:true, age:39, gender:"F", localTies:true, amountInvolved:4200000},
+  {id:"UT/2022/0154", name:"Jaswant Rai", jail:"District Jail, Bathinda", chargeIds:["341","323"], custodyStart:_ago(13), chargeSheetFiled:true, trialStarted:false, firstTimeOffender:true, age:47, gender:"M", localTies:true, indigent:true},
+  {id:"UT/2023/0871", name:"Mohd Rafiq", jail:"Central Jail, Amritsar", chargeIds:["392"], custodyStart:_ago(41), chargeSheetFiled:true, trialStarted:true, firstTimeOffender:true, age:28, gender:"M", localTies:true, indigent:true},
+  {id:"UT/2024/0520", name:"Harjeet Kaur", jail:"Women's Jail, Ludhiana", chargeIds:["498A"], custodyStart:_ago(9), chargeSheetFiled:true, trialStarted:false, firstTimeOffender:true, age:36, gender:"F", localTies:true, indigent:true, victimRelated:true}
+];
+
+/* Bilingual string table — Hindi rendering for the prisoner-facing view */
+const I18N = {
+  en:{title:"Bail Reckoner",sub:"Undertrial bail decision-support · IPC/CrPC and BNS / BNSS / BSA 2023",
+    prisoner:"Undertrial",lawyer:"Legal Aid",judge:"Bench",utrc:"Review Committee",
+    charges:"Charges framed",custody:"Custody & case status",discretion:"Discretionary factors",
+    compute:"Compute bail position",sample:"Load sample matter",print:"Export report",
+    served:"Custody served",gravest:"Gravest charge",maxsent:"Maximum sentence",risk:"Risk (triple test)",
+    routes:"Routes to release",clock:"Custody clock",proc:"Procedural pre-requisites",
+    law:"Judicial pronouncements",trace:"Reasoning trace",cond:"Bail conditions",
+    ELIGIBLE:"Bail eligibility established",ARGUABLE:"Bail is arguable on merits",CONTESTED:"Bail will be strongly contested"},
+  hi:{title:"जमानत गणक",sub:"विचाराधीन बंदी जमानत सहायता · भा.दं.सं / भा.ना.सु.सं 2023",
+    prisoner:"विचाराधीन बंदी",lawyer:"विधिक सहायता",judge:"न्यायपीठ",utrc:"समीक्षा समिति",
+    charges:"लगाए गए आरोप",custody:"हिरासत एवं वाद स्थिति",discretion:"विवेकाधीन कारक",
+    compute:"जमानत स्थिति ज्ञात करें",sample:"नमूना वाद देखें",print:"रिपोर्ट निर्यात करें",
+    served:"बिताई गई हिरासत",gravest:"गंभीरतम आरोप",maxsent:"अधिकतम सज़ा",risk:"जोखिम (त्रि-परीक्षण)",
+    routes:"रिहाई के उपाय",clock:"हिरासत घड़ी",proc:"प्रक्रियात्मक आवश्यकताएँ",
+    law:"न्यायिक निर्णय",trace:"तर्क शृंखला",cond:"जमानत की शर्तें",
+    ELIGIBLE:"जमानत की पात्रता सिद्ध है",ARGUABLE:"जमानत गुण-दोष पर विचारणीय है",CONTESTED:"जमानत का कड़ा विरोध होगा"}
+};
+/* Bail Reckoner — Eligibility Engine (pure, framework-free, embeddable)
+   API:  BailReckoner.evaluate(input) -> report
+   input = {
+     chargeIds: [..], custodyStart:'YYYY-MM-DD', asOf:'YYYY-MM-DD',
+     chargeSheetFiled:bool, chargeSheetDate, trialStarted:bool,
+     firstTimeOffender:bool, age:int, gender:'M'|'F'|'O', sick:bool,
+     foreignNational:bool, passportSurrendered:bool, localTies:bool,
+     priorConvictions:int, absconded:bool, witnessThreat:bool,
+     influentialPosition:bool, victimRelated:bool, amountInvolved:number,
+     indigent:bool
+   }
+*/
+var BailReckoner = (function () {
+
+  function months(a, b) {
+    var d1 = new Date(a), d2 = new Date(b);
+    return (d2 - d1) / (1000 * 60 * 60 * 24 * 30.4375);
+  }
+  function fmtTerm(m) {
+    if (m === 9999) return "Death / Life";
+    if (m === 1200) return "Life imprisonment";
+    if (m === 0) return "No custodial sentence";
+    if (m < 12) return m + " month" + (m > 1 ? "s" : "");
+    var y = Math.floor(m / 12), r = m % 12;
+    return y + " year" + (y > 1 ? "s" : "") + (r ? " " + r + " m" : "");
+  }
+  function fmtDur(m) {
+    var y = Math.floor(m / 12), r = Math.round(m % 12);
+    return (y ? y + "y " : "") + r + "m";
+  }
+  function addMonths(dateStr, m) {
+    var d = new Date(dateStr);
+    d.setDate(d.getDate() + Math.round(m * 30.4375));
+    return d.toISOString().slice(0, 10);
+  }
+
+  var SPECIAL_BARS = {
+    UAPA16: "UAPA s.43D(5)", UAPA20: "UAPA s.43D(5)", UAPA13: "UAPA s.43D(5)",
+    PMLA4: "PMLA s.45 (twin conditions)", NDPS21C: "NDPS s.37 (twin conditions)",
+    SCST3_1: "SC/ST Act s.18 (anticipatory bail bar only)", SCST3_2: "SC/ST Act s.18",
+    POCSO4: "POCSO s.29 presumption", BNS111: "BNS s.111 organised crime"
+  };
+
+  function evaluate(inp) {
+    var charges = (inp.chargeIds || []).map(function (id) {
+      return OFFENCES.filter(function (o) { return o.id === id; })[0];
+    }).filter(Boolean);
+
+    var asOf = inp.asOf || new Date().toISOString().slice(0, 10);
+    var served = inp.custodyStart ? Math.max(0, months(inp.custodyStart, asOf)) : 0;
+
+    var r = {
+      asOf: asOf, charges: charges, servedMonths: served,
+      servedLabel: fmtDur(served), flags: [], routes: [], caselaw: [],
+      procedural: [], discretion: null, gravest: null, trace: []
+    };
+    function T(rule, fact) { r.trace.push({ rule: rule, fact: fact }); }
+    r._T = T;
+    if (!charges.length) { r.verdict = "NO_CHARGE"; return r; }
+
+    /* ---- 1. Gravest charge & aggregate profile ---- */
+    var gravest = charges.slice().sort(function (a, b) { return b.max - a.max; })[0];
+    r.gravest = gravest;
+    var allBailable = charges.every(function (c) { return /^Bailable/.test(c.bail); });
+    var anyLife = charges.some(function (c) { return c.max >= 1200; });
+    var anyDeath = charges.some(function (c) { return c.max === 9999; });
+    var maxMin = Math.max.apply(null, charges.map(function (c) { return c.min; }));
+    var cats = charges.map(function (c) { return c.category; });
+
+    T("Gravest-charge rule", "Of " + charges.length + " charge(s), the gravest is " + gravest.title + " (max " + fmtTerm(gravest.max) + "). Bail category is governed by it.");
+    T("Bailability aggregation", allBailable ? "Every charge is bailable — s.436 CrPC / s.478 BNSS entitlement." : "At least one non-bailable charge — s.437/439 CrPC / s.480/483 BNSS applies.");
+    r.allBailable = allBailable;
+    r.anyLife = anyLife;
+
+    /* ---- 2. s.436A CrPC / s.479 BNSS — half-term rule ---- */
+    var finite = charges.filter(function (c) { return c.max < 1200 && c.max > 0; });
+    var capMax = finite.length ? Math.max.apply(null, finite.map(function (c) { return c.max; })) : null;
+    var s436 = { applicable: false };
+    if (anyDeath) {
+      s436.applicable = false;
+      s436.reason = "s.436A CrPC / s.479 BNSS does not apply — an offence punishable with death is alleged.";
+    } else if (anyLife) {
+      s436.applicable = false;
+      s436.reason = "Maximum sentence includes life imprisonment; the half-term rule has no fixed denominator. Bail must be sought on merits u/s 439 CrPC / s.483 BNSS.";
+    } else if (inp.multipleCases) {
+      s436.applicable = false;
+      s436.reason = "s.479(1) BNSS expressly bars release under this section where investigation, inquiry or trial is pending in more than one offence or in multiple cases. Apply for regular bail u/s 483 BNSS instead.";
+    } else if (capMax) {
+      var firstTimer = !!inp.firstTimeOffender;
+      var fraction = firstTimer ? (1 / 3) : (1 / 2);
+      var threshold = capMax * fraction;
+      s436.applicable = true;
+      s436.maxTerm = capMax;
+      s436.fraction = firstTimer ? "one-third (s.479(1) proviso BNSS — first-time offender)" : "one-half (s.436A CrPC / s.479(1) BNSS)";
+      s436.thresholdMonths = threshold;
+      s436.thresholdLabel = fmtDur(threshold);
+      s436.eligibleDate = inp.custodyStart ? addMonths(inp.custodyStart, threshold) : null;
+      s436.met = served >= threshold;
+      s436.shortfall = Math.max(0, threshold - served);
+      // full-term rule
+      s436.fullTermMet = served >= capMax;
+    }
+    if (s436.applicable) T("s.436A CrPC / s.479 BNSS", "Threshold = " + s436.fraction + " of " + fmtTerm(capMax) + " = " + s436.thresholdLabel + "; served " + fmtDur(served) + " -> " + (s436.met ? "THRESHOLD CROSSED" : "not yet reached"));
+    else T("s.436A CrPC / s.479 BNSS", s436.reason);
+    r.s436A = s436;
+
+    /* ---- 3. Default / statutory bail — s.167(2) CrPC / s.187 BNSS ---- */
+    var defWindow = 60;
+    if (gravest.max >= 1200 || gravest.max >= 120) defWindow = 90;
+    var uapa = charges.some(function (c) { return /UAPA/.test(c.act); });
+    var ndps = charges.some(function (c) { return /NDPS/.test(c.act) && c.min >= 120; });
+    if (uapa || ndps) defWindow = 180;
+    var def = {
+      windowDays: defWindow,
+      windowLabel: defWindow + " days",
+      basis: uapa ? "UAPA s.43D(2)(b)" : (ndps ? "NDPS s.36A(4)" : (defWindow === 90 ? "s.167(2)(a)(i) CrPC / s.187(3) BNSS — offence punishable with 10 yrs+/life/death" : "s.167(2)(a)(ii) CrPC / s.187(3) BNSS")),
+      dueDate: inp.custodyStart ? addMonths(inp.custodyStart, defWindow / 30.4375) : null
+    };
+    def.expired = inp.custodyStart ? (served * 30.4375 >= defWindow) : false;
+    def.available = def.expired && !inp.chargeSheetFiled;
+    T("Default bail — s.167(2) CrPC / s.187 BNSS", def.basis + " gives a " + def.windowLabel + " window. Charge-sheet " + (inp.chargeSheetFiled ? "filed" : "NOT filed") + "; window " + (def.expired ? "expired" : "still running") + " -> " + (def.available ? "INDEFEASIBLE RIGHT ACCRUED" : "not available"));
+    r.defaultBail = def;
+
+    /* ---- 4. Statutory bars ---- */
+    charges.forEach(function (c) {
+      if (SPECIAL_BARS[c.id]) r.flags.push({ level: "bar", text: c.act + " — " + SPECIAL_BARS[c.id] + " applies to this charge." });
+    });
+    // PMLA proviso
+    if (charges.some(function (c) { return c.id === "PMLA4"; })) {
+      if (inp.gender === "F" || inp.age < 16 || inp.sick || (inp.amountInvolved && inp.amountInvolved < 10000000)) {
+        r.flags.push({ level: "relief", text: "PMLA s.45 proviso available: accused is a woman / under 16 / sick or infirm / amount involved below Rs.1 crore — the twin conditions need not be satisfied." });
+      }
+    }
+    if (charges.some(function (c) { return c.id === "NDPS21A" || c.id === "NDPS21B"; }) && !charges.some(function (c) { return c.id === "NDPS21C"; })) {
+      r.flags.push({ level: "relief", text: "Only small/intermediate quantity alleged — the s.37 NDPS twin-condition bar is NOT attracted (Rhea Chakraborty, 2020)." });
+    }
+
+    /* ---- 5. Satender Kumar Antil categorisation ---- */
+    var cat;
+    if (allBailable) cat = { code: "Bailable", text: "Bail is a matter of right u/s 436 CrPC / s.478 BNSS. The officer-in-charge or the Magistrate must release on bond." };
+    else if (gravest.max <= 84 && !r.flags.some(function (f) { return f.level === "bar"; })) cat = { code: "Category A", text: "Offences punishable up to 7 years. Arrest not automatic (Arnesh Kumar); if the accused co-operated with investigation, bail should ordinarily follow on filing of charge-sheet." };
+    else if (r.flags.some(function (f) { return f.level === "bar"; })) cat = { code: "Category D", text: "Offences under special Acts with stringent bail provisions. Bail application to be decided within 2 weeks (Satender Kumar Antil)." };
+    else if (cats.indexOf("economic") >= 0) cat = { code: "Category C/D", text: "Economic offence — gravity alone is not a ground for refusal (Sanjay Chandra), but flight risk and asset dissipation must be addressed." };
+    else cat = { code: "Category B", text: "Offences punishable with death, life or more than 7 years. Bail on merits after hearing the prosecution; the triple test governs." };
+    T("Satender Kumar Antil v. CBI (2022)", "Classified as " + cat.code + ". " + cat.text);
+    r.antilCategory = cat;
+
+    /* ---- 6. Judge's discretion — triple test scoring ---- */
+    var risk = { flight: 0, evidence: 0, witness: 0, reasons: { flight: [], evidence: [], witness: [] } };
+    if (inp.foreignNational) { risk.flight += 30; risk.reasons.flight.push("Foreign national — risk of leaving the jurisdiction."); }
+    if (inp.foreignNational && inp.passportSurrendered) { risk.flight -= 15; risk.reasons.flight.push("Passport surrendered — mitigates flight risk."); }
+    if (!inp.foreignNational && inp.passportSurrendered) { risk.flight -= 10; risk.reasons.flight.push("Passport deposited with the court."); }
+    if (inp.absconded) { risk.flight += 35; risk.reasons.flight.push("Previously absconded / proclaimed offender."); }
+    if (!inp.localTies) { risk.flight += 20; risk.reasons.flight.push("No verified permanent local address or family ties."); }
+    else { risk.flight -= 10; risk.reasons.flight.push("Verified local roots and family ties."); }
+    if (anyLife || anyDeath) { risk.flight += 20; risk.reasons.flight.push("Severity of the potential sentence is itself an incentive to abscond."); }
+    if ((inp.priorConvictions || 0) > 0) { risk.flight += 10; risk.reasons.flight.push((inp.priorConvictions) + " prior conviction(s) on record."); }
+
+    if (inp.influentialPosition) { risk.evidence += 30; risk.reasons.evidence.push("Accused holds a position of influence/authority."); }
+    if (!inp.chargeSheetFiled) { risk.evidence += 25; risk.reasons.evidence.push("Investigation incomplete — documentary/electronic evidence not yet secured."); }
+    else { risk.evidence -= 15; risk.reasons.evidence.push("Charge-sheet filed; evidence is now on record and largely documentary."); }
+    if (cats.indexOf("cyber") >= 0 && !inp.chargeSheetFiled) { risk.evidence += 15; risk.reasons.evidence.push("Cyber offence — digital evidence may be remotely deleted before seizure/mirroring."); }
+    if (cats.indexOf("economic") >= 0 && !inp.chargeSheetFiled) { risk.evidence += 10; risk.reasons.evidence.push("Economic offence — records may be fabricated or destroyed."); }
+
+    if (inp.witnessThreat) { risk.witness += 35; risk.reasons.witness.push("Specific allegation of threat to a witness/complainant."); }
+    if (inp.victimRelated) { risk.witness += 20; risk.reasons.witness.push("Accused is known to / related to the victim."); }
+    if (cats.indexOf("women") >= 0 || cats.indexOf("children") >= 0 || cats.indexOf("scst") >= 0) { risk.witness += 15; risk.reasons.witness.push("Vulnerable victim category — protection of the victim is a mandatory consideration."); }
+    if (inp.influentialPosition) { risk.witness += 15; risk.reasons.witness.push("Capacity to influence witnesses due to standing."); }
+    if (inp.trialStarted) { risk.witness -= 10; risk.reasons.witness.push("Trial has commenced; material witnesses may already be examined."); }
+
+    ["flight", "evidence", "witness"].forEach(function (k) { risk[k] = Math.max(0, Math.min(100, risk[k])); });
+    risk.composite = Math.round((risk.flight + risk.evidence + risk.witness) / 3);
+    // Gravity floor: the seriousness of the charge is itself a mandatory consideration
+    var floor = anyDeath ? 65 : anyLife ? 55 : maxMin >= 120 ? 55 : gravest.max > 84 ? 40 : gravest.max > 36 ? 25 : 0;
+    if (r.flags.some(function (f) { return f.level === "bar"; })) floor = Math.max(floor, 60);
+    if (floor > risk.composite) {
+      risk.gravityFloor = floor;
+      risk.composite = floor;
+      risk.reasons.flight.push("Composite score raised to the gravity floor for an offence punishable with " + fmtTerm(gravest.max) + ".");
+    }
+    risk.band = risk.composite < 30 ? "LOW" : risk.composite < 60 ? "MODERATE" : "HIGH";
+    T("Triple test — P. Chidambaram v. ED (2019)", "Flight " + risk.flight + ", Evidence " + risk.evidence + ", Witness " + risk.witness + " -> composite " + risk.composite + "/100 (" + risk.band + ")" + (risk.gravityFloor ? " [raised to gravity floor " + risk.gravityFloor + "]" : ""));
+    r.discretion = risk;
+
+    /* ---- 7. Verdict ---- */
+    var routes = [];
+    if (allBailable) {
+      routes.push({ rank: 1, name: "Bail as of right — s.436 CrPC / s.478 BNSS", strength: "Certain", why: "Every charge framed is a bailable offence. Release on bond is mandatory; refusal is illegal." });
+    }
+    if (def.available) {
+      routes.push({ rank: 1, name: "Default / statutory bail — s.167(2) CrPC / s.187 BNSS", strength: "Very strong", why: def.windowLabel + " (" + def.basis + ") have elapsed from remand and no charge-sheet is on record. This is an indefeasible right (Bikramjit Singh v. State of Punjab, 2020) — apply immediately and furnish bond." });
+    }
+    if (s436.applicable && s436.fullTermMet) {
+      routes.push({ rank: 1, name: "Release — detention exceeds maximum sentence", strength: "Certain", why: "Custody of " + fmtDur(served) + " already exceeds the maximum sentence of " + fmtTerm(capMax) + ". Continued detention is unconstitutional (Hussainara Khatoon)." });
+    } else if (s436.applicable && s436.met) {
+      routes.push({ rank: 1, name: "s.436A CrPC / s.479 BNSS — half-term (or one-third) release", strength: "Very strong", why: "Undertrial has served " + fmtDur(served) + ", crossing the " + s436.fraction + " threshold of " + s436.thresholdLabel + ". The court shall release on personal bond, with or without sureties." });
+    }
+    if (!allBailable) {
+      routes.push({ rank: routes.length ? 2 : 1, name: "Regular bail — s.439 CrPC / s.483 BNSS", strength: risk.band === "LOW" ? "Strong" : risk.band === "MODERATE" ? "Arguable" : "Difficult", why: "Application before the " + (gravest.court === "Sessions" || /Special|Sessions/.test(gravest.court) ? "Court of Session / Special Court" : "Magistrate, then Sessions") + ". Triple-test risk is " + risk.band + " (" + risk.composite + "/100)." });
+    }
+    if (charges.some(function (c) { return /Compoundable/.test(c.comp); })) {
+      routes.push({ rank: 3, name: "Compounding — s.320 CrPC / s.359 BNSS", strength: "Situational", why: "One or more charges are compoundable. A recorded settlement with the victim can lead to acquittal and moots the bail question. Cheque-bounce matters are fully compoundable u/s 147 NI Act." });
+    }
+    if (gravest.max <= 84) {
+      routes.push({ rank: 4, name: "Plea bargaining — Ch. XXI-A CrPC / Ch. XXIII BNSS", strength: "Situational", why: "Offence is punishable with 7 years or less and is not against a woman or a child under 14 — a mutually satisfactory disposition may end the matter with a reduced sentence." });
+    }
+    r.routes = routes.sort(function (a, b) { return a.rank - b.rank; });
+
+    if (allBailable || def.available || (s436.applicable && s436.met)) r.verdict = "ELIGIBLE";
+    else if (risk.band === "HIGH" || anyDeath || maxMin >= 120) r.verdict = "CONTESTED";
+    else r.verdict = "ARGUABLE";
+
+    /* ---- 8. Procedural checklist ---- */
+    var suretyLevel = anyLife ? "Two sureties in the like amount, at least one local and solvent" :
+      gravest.max > 84 ? "One or two sureties of sound means" :
+        gravest.max > 36 ? "One local surety" : "Personal bond; surety may be dispensed with";
+    var bondAmt = anyLife ? "Rs. 50,000 – 1,00,000" : gravest.max > 84 ? "Rs. 25,000 – 50,000" : gravest.max > 36 ? "Rs. 10,000 – 25,000" : "Rs. 5,000 – 10,000";
+    r.procedural = [
+      { item: "Personal bond", detail: "Executed by the accused before the court/jail superintendent — indicative quantum " + bondAmt + " (Moti Ram: quantum must not be excessive)." },
+      { item: "Surety bond", detail: suretyLevel + ". Surety must file an affidavit of solvency with proof of property/income." },
+      { item: "Identity verification", detail: "Aadhaar / voter ID / ration card of accused and each surety; address verified by the SHO of the local police station." },
+      { item: "Verification report", detail: "Court will call for a surety verification report; in jail-bail cases the Superintendent forwards the bond." },
+      { item: "Fine / compensation", detail: charges.some(function (c) { return /Compoundable/.test(c.comp); }) ? "If compounding, deposit the settlement/compensation amount before the court." : "Not applicable at bail stage; fines arise only on conviction." },
+      { item: "Attendance undertaking", detail: "Undertaking to attend every hearing and not to seek unnecessary adjournments; mobile number and address on affidavit u/s 88 CrPC / s.91 BNSS." }
+    ];
+    if (inp.indigent) r.procedural.push({ item: "Indigent prisoner relief", detail: "Move for release on personal bond without sureties; seek assistance from DLSA and the Undertrial Review Committee. Poverty cannot be a ground for continued detention (Moti Ram)." });
+    if (inp.foreignNational) r.procedural.push({ item: "Foreign national", detail: "Passport to be deposited; FRRO and the Embassy/High Commission to be notified; consular access under Art.36 VCCR; a local Indian surety is normally insisted upon." });
+
+    /* ---- 9. Suggested bail conditions ---- */
+    var conds = ["Shall not directly or indirectly influence any witness or tamper with evidence.", "Shall attend the court on every date fixed."];
+    if (risk.flight >= 30) conds.push("Shall surrender the passport and shall not leave the country without leave of the court.");
+    if (risk.flight >= 40) conds.push("Shall report to the SHO of the jurisdictional police station on the first Monday of every month.");
+    if (risk.witness >= 40) conds.push("Shall not enter the locality of the complainant/victim or contact them by any means.");
+    if (cats.indexOf("cyber") >= 0) conds.push("Shall not access the seized devices/accounts and shall preserve all digital records.");
+    if (cats.indexOf("economic") >= 0) conds.push("Shall not alienate or create third-party rights in the attached assets; shall join investigation as and when required.");
+    if (inp.foreignNational) conds.push("Shall not change the declared residential address without prior intimation to the court and the FRRO.");
+    r.conditions = conds;
+
+    /* ---- 10. Case law ---- */
+    r.caselaw = CASELAW.filter(function (c) {
+      return c.tags.indexOf("all") >= 0 || c.tags.some(function (t) { return cats.indexOf(t) >= 0; });
+    });
+
+    T("Final verdict", r.verdict + " — " + r.routes.length + " route(s) to release identified.");
+    delete r._T;
+    return r;
+  }
+
+  /* ---- Batch screening for Undertrial Review Committees (s.479(3) BNSS duty of jail Supt.) ---- */
+  function screenRoster(rows) {
+    return rows.map(function (p) {
+      var rep = evaluate(p);
+      return {
+        id: p.id, name: p.name, jail: p.jail, chargeIds: p.chargeIds,
+        served: rep.servedLabel, servedMonths: rep.servedMonths,
+        verdict: rep.verdict, risk: rep.discretion ? rep.discretion.band : "-",
+        s436: rep.s436A && rep.s436A.met, def: rep.defaultBail && rep.defaultBail.available,
+        over: rep.s436A && rep.s436A.fullTermMet,
+        top: rep.routes && rep.routes[0] ? rep.routes[0].name : "-",
+        report: rep
+      };
+    }).sort(function (a, b) {
+      var w = { ELIGIBLE: 0, ARGUABLE: 1, CONTESTED: 2 };
+      return (w[a.verdict] - w[b.verdict]) || (b.servedMonths - a.servedMonths);
+    });
+  }
+
+  return {
+    screenRoster: screenRoster, evaluate: evaluate, fmtTerm: fmtTerm, fmtDur: fmtDur, OFFENCES: typeof OFFENCES !== "undefined" ? OFFENCES : [] };
+})();
+/* ================= BAIL RECKONER · HINDI TRANSLATION LAYER =================
+   tr(s)  -> translates any rendered string.
+   Order:  1. exact dictionary hit
+           2. sentence-template match (for engine-composed strings)
+           3. term/duration formatter
+           4. fallback: original English (never blank)
+   Legal citations, section numbers and case names are deliberately left in
+   the Roman script, as is standard practice in Indian court usage.        */
+
+var HI = {};
+function D(o){ for(var k in o) HI[k]=o[k]; }
+
+/* ---------- UI CHROME ---------- */
+D({
+"भारत सरकार | Government of India":"भारत सरकार | Government of India",
+"Ministry of Law & Justice · Department of Justice":"विधि एवं न्याय मंत्रालय · न्याय विभाग",
+"Bail Reckoner":"जमानत गणक",
+"Undertrial bail eligibility & decision support system":"विचाराधीन बंदी जमानत पात्रता एवं निर्णय सहायता प्रणाली",
+"National Legal Services Authority":"राष्ट्रीय विधिक सेवा प्राधिकरण",
+"Helpline 15100":"हेल्पलाइन 15100",
+"Check Eligibility":"पात्रता जाँचें",
+"Jail Roster Screening":"कारागार सूची जाँच",
+"Acts & Sections":"अधिनियम एवं धाराएँ",
+"Viewing as":"किस रूप में देख रहे हैं",
+"Undertrial prisoner / family":"विचाराधीन बंदी / परिवार",
+"Legal aid provider":"विधिक सहायता प्रदाता",
+"Judicial authority":"न्यायिक प्राधिकारी",
+"Simple language, step-by-step guidance and your rights.":"सरल भाषा, चरण-दर-चरण मार्गदर्शन और आपके अधिकार।",
+"Full analysis plus an auto-drafted bail application.":"पूर्ण विश्लेषण एवं स्वतः तैयार जमानत आवेदन।",
+"Risk assessment, imposable conditions and the reasoning trail.":"जोखिम आकलन, अधिरोपित की जा सकने वाली शर्तें और तर्क शृंखला।",
+"1. Charges":"1. आरोप",
+"2. Custody details":"2. हिरासत विवरण",
+"3. Other factors":"3. अन्य कारक",
+"Search section, Act or offence":"धारा, अधिनियम या अपराध खोजें",
+"e.g. 420, POCSO, NDPS, 66D":"जैसे 420, POCSO, NDPS, 66D",
+"Class of offence":"अपराध की श्रेणी",
+"All classes":"सभी श्रेणियाँ",
+"General (IPC / BNS)":"सामान्य (भा.दं.सं. / भा.न्या.सं.)",
+"Cyber crimes":"साइबर अपराध",
+"Crimes against SC & ST":"अनुसूचित जाति एवं जनजाति के विरुद्ध अपराध",
+"Crimes against women":"महिलाओं के विरुद्ध अपराध",
+"Crimes against children":"बच्चों के विरुद्ध अपराध",
+"Offences against the State":"राज्य के विरुद्ध अपराध",
+"Economic offences":"आर्थिक अपराध",
+"Crimes involving foreigners":"विदेशियों से संबंधित अपराध",
+"Date of arrest":"गिरफ़्तारी की तिथि",
+"Calculate as on":"इस तिथि तक गणना",
+"Charge-sheet filed":"आरोप-पत्र दाखिल",
+"Trial has begun":"विचारण प्रारंभ हो चुका है",
+"Cases pending in more than one offence":"एक से अधिक अपराध में मामले लंबित",
+"s.479(1) BNSS expressly bars release under this section where investigation, inquiry or trial is pending in more than one offence or in multiple cases. Apply for regular bail u/s 483 BNSS instead.":"धारा 479(1) भा.ना.सु.सं. स्पष्ट रूप से इस धारा के अंतर्गत रिहाई पर रोक लगाती है जहाँ एक से अधिक अपराध या अनेक मामलों में अनुसंधान, जाँच या विचारण लंबित हो। इसके स्थान पर धारा 483 भा.ना.सु.सं. के अंतर्गत नियमित जमानत हेतु आवेदन करें।",
+"First-time offender":"प्रथम बार का अपराधी",
+"Attracts the one-third rule, s.479 BNSS":"एक-तिहाई नियम लागू, धारा 479 भा.ना.सु.सं.",
+"Age":"आयु","Gender":"लिंग","Male":"पुरुष","Female":"महिला","Other":"अन्य",
+"Prior convictions":"पूर्व दोषसिद्धियाँ","Amount involved (₹)":"संलिप्त राशि (₹)",
+"Foreign national":"विदेशी नागरिक",
+"Passport surrendered":"पासपोर्ट जमा कराया गया",
+"Verified address & family ties":"सत्यापित पता एवं पारिवारिक संबंध",
+"Previously absconded":"पूर्व में फरार रहा",
+"Alleged threat to a witness":"साक्षी को धमकी का आरोप",
+"Position of power or influence":"शक्ति या प्रभाव का पद",
+"Known to the victim":"पीड़ित का परिचित",
+"Sick, infirm or disabled":"बीमार, अशक्त या दिव्यांग",
+"Cannot afford a surety":"जमानती की व्यवस्था करने में असमर्थ",
+"Check Bail Eligibility":"जमानत पात्रता जाँचें",
+"Load sample case":"नमूना मामला देखें",
+"Print / save as PDF":"प्रिंट करें / PDF सहेजें",
+"selected":"चयनित",
+"No matching provision found":"कोई मिलता-जुलता प्रावधान नहीं मिला",
+"Please select at least one charge.":"कृपया कम से कम एक आरोप चुनें।",
+"No case entered yet":"अभी कोई मामला दर्ज नहीं",
+"Select at least one charge":"कम से कम एक आरोप चुनें",
+"Disclaimer.":"अस्वीकरण।",
+"This is a decision-support tool. It does not give legal advice and does not replace the discretion of the court under ss. 437–439 CrPC / ss. 480–483 BNSS, 2023. All provisions shown are indicative and must be verified against the bare Act.":
+ "यह एक निर्णय-सहायता उपकरण है। यह विधिक सलाह नहीं देता और दं.प्र.सं. की धारा 437–439 / भा.ना.सु.सं. 2023 की धारा 480–483 के अंतर्गत न्यायालय के विवेकाधिकार का स्थान नहीं लेता। दर्शाए गए सभी प्रावधान सांकेतिक हैं और मूल अधिनियम से सत्यापित किए जाने चाहिए।"
+});
+
+/* ---------- SECTION HEADINGS / RESULT LABELS ---------- */
+D({
+"Custody served":"बिताई गई हिरासत","Gravest charge":"गंभीरतम आरोप","Maximum sentence":"अधिकतम सज़ा",
+"Risk (triple test)":"जोखिम (त्रि-परीक्षण)","Category":"श्रेणी",
+"Bail eligibility established":"जमानत की पात्रता सिद्ध है",
+"Bail is arguable on merits":"जमानत गुण-दोष पर विचारणीय है",
+"Bail will be strongly contested":"जमानत का कड़ा विरोध होगा",
+"Your position, step by step":"आपकी स्थिति, चरण-दर-चरण",
+"What you must arrange":"आपको क्या व्यवस्था करनी है",
+"Charges and penal provisions":"आरोप एवं दंडात्मक प्रावधान",
+"Statutory bars and reliefs":"वैधानिक रोक एवं राहतें",
+"Custody clock — s.436A CrPC / s.479 BNSS":"हिरासत घड़ी — धारा 436A दं.प्र.सं. / धारा 479 भा.ना.सु.सं.",
+"Routes to release":"रिहाई के उपाय",
+"Judicial discretion — the triple test":"न्यायिक विवेक — त्रि-परीक्षण",
+"Conditions the court may impose":"न्यायालय द्वारा अधिरोपित की जा सकने वाली शर्तें",
+"Conditions to offer in the application":"आवेदन में प्रस्तावित की जाने वाली शर्तें",
+"Procedural requirements":"प्रक्रियात्मक आवश्यकताएँ",
+"Relevant judgments":"संबंधित न्यायिक निर्णय",
+"How this result was reached":"यह परिणाम कैसे निकाला गया",
+"Draft bail application":"जमानत आवेदन का प्रारूप",
+"Undertrial Review Committee — screening board":"विचाराधीन बंदी समीक्षा समिति — जाँच पटल",
+"Committee note":"समिति टिप्पणी",
+"Statutory database.":"वैधानिक डेटाबेस।",
+"General offences — IPC 1860 / BNS 2023":"सामान्य अपराध — भा.दं.सं. 1860 / भा.न्या.सं. 2023",
+"Crimes against Scheduled Castes & Scheduled Tribes":"अनुसूचित जाति एवं अनुसूचित जनजाति के विरुद्ध अपराध",
+"Offence":"अपराध","Statute":"अधिनियम","Sentence":"सज़ा","Bail":"जमानत",
+"Compounding":"शमन","Court":"न्यायालय","BNS":"भा.न्या.सं.",
+"Register No.":"पंजी संख्या","Name":"नाम","Jail":"कारागार","Charges":"आरोप",
+"Custody":"हिरासत","Result":"परिणाम","Risk":"जोखिम","Best route":"सर्वोत्तम उपाय",
+"On roster":"सूची में","Fit for release":"रिहाई योग्य","s.479 BNSS met":"धारा 479 भा.ना.सु.सं. पूर्ण",
+"Default bail due":"डिफ़ॉल्ट जमानत देय","Beyond max term":"अधिकतम अवधि से अधिक","Median custody":"मध्यमान हिरासत",
+"OVER":"अधिक","authorities":"निर्णय","charge(s)":"आरोप","listed":"सूचीबद्ध","offences":"अपराध",
+"General":"सामान्य","Cyber":"साइबर","SC/ST":"अ.जा./अ.ज.जा.","Women":"महिला","Children":"बालक",
+"State":"राज्य","Economic":"आर्थिक","Foreigner":"विदेशी",
+"Risk of absconding":"फरार होने का जोखिम",
+"Risk of tampering with evidence":"साक्ष्य से छेड़छाड़ का जोखिम",
+"Risk of influencing witnesses":"साक्षियों को प्रभावित करने का जोखिम",
+"LOW":"कम","MODERATE":"मध्यम","HIGH":"उच्च",
+"ELIGIBLE":"पात्र","ARGUABLE":"विचारणीय","CONTESTED":"विवादित",
+"Arrest":"गिरफ़्तारी","▲ Release threshold":"▲ रिहाई सीमा",
+"Certain":"निश्चित","Very strong":"अत्यंत प्रबल","Strong":"प्रबल","Arguable":"विचारणीय",
+"Situational":"परिस्थितिजन्य","Difficult":"कठिन",
+"Bailable":"जमानती","Non-bailable":"गैर-जमानती","Cognizable":"संज्ञेय","Non-cognizable":"असंज्ञेय",
+"Bailable (first offence)":"जमानती (प्रथम अपराध)",
+"Bailable in practice (≤1 yr)":"व्यवहार में जमानती (≤1 वर्ष)",
+"Non-bailable (if value > Rs.1 crore)":"गैर-जमानती (यदि मूल्य 1 करोड़ रु. से अधिक)",
+"Civil — no arrest":"सिविल — गिरफ़्तारी नहीं",
+"min":"न्यूनतम"
+});
+
+/* ---------- ROLE-SPECIFIC BANNER MESSAGES ---------- */
+D({
+"The law is in your favour. Ask the jail legal aid clinic to file your application today.":
+ "कानून आपके पक्ष में है। कारागार विधिक सहायता केंद्र से आज ही आपका आवेदन दाखिल करने को कहें।",
+"You can apply for bail, and a lawyer will be given to you free of cost.":
+ "आप जमानत के लिए आवेदन कर सकते हैं, और आपको निःशुल्क वकील उपलब्ध कराया जाएगा।",
+"A strict law applies to your case. You still have the right to apply and to free legal aid.":
+ "आपके मामले में कठोर कानून लागू है। फिर भी आपको आवेदन करने और निःशुल्क विधिक सहायता का अधिकार है।",
+"A statutory route to release is open. File on the entitlement, not on the merits.":
+ "रिहाई का वैधानिक मार्ग उपलब्ध है। गुण-दोष पर नहीं, वैधानिक अधिकार के आधार पर आवेदन करें।",
+"Prepare a merits application that meets the triple test directly.":
+ "त्रि-परीक्षण को सीधे संबोधित करते हुए गुण-दोष आधारित आवेदन तैयार करें।",
+"A statutory bar applies. Plead Article 21, delay in trial and K.A. Najeeb.":
+ "वैधानिक रोक लागू है। अनुच्छेद 21, विचारण में विलंब तथा K.A. Najeeb का आधार लें।",
+"Statutory entitlement is made out. Reasons must be recorded if release is declined.":
+ "वैधानिक अधिकार सिद्ध होता है। रिहाई अस्वीकार करने पर कारण अभिलिखित करने होंगे।",
+"Discretion is to be exercised on the triple test.":"त्रि-परीक्षण के आधार पर विवेकाधिकार का प्रयोग किया जाना है।",
+"Conditions of the special statute must be satisfied before release.":
+ "रिहाई से पूर्व विशेष अधिनियम की शर्तें पूरी होनी चाहिए।"
+});
+
+/* ---------- PRISONER STEP CARD ---------- */
+D({
+"You were arrested":"आप गिरफ़्तार हुए",
+"Half-term rule (s.479 BNSS)":"आधी-अवधि नियम (धारा 479 भा.ना.सु.सं.)",
+"Apply for bail":"जमानत के लिए आवेदन करें",
+"You have crossed this date. The court must consider releasing you on your own bond.":
+ "आप यह तिथि पार कर चुके हैं। न्यायालय को आपको आपके निजी मुचलके पर रिहा करने पर विचार करना होगा।",
+"The police did not file the charge-sheet in time. You have an automatic right to bail today.":
+ "पुलिस ने समय पर आरोप-पत्र दाखिल नहीं किया। आज आपको जमानत का स्वतः अधिकार प्राप्त है।",
+"Free legal aid is your right under Article 39A. Ask the Jail Superintendent for the DLSA lawyer, or call <b>NALSA 15100</b>.":
+ "अनुच्छेद 39A के अंतर्गत निःशुल्क विधिक सहायता आपका अधिकार है। कारागार अधीक्षक से DLSA वकील माँगें, या <b>NALSA 15100</b> पर कॉल करें।",
+"Important.":"महत्वपूर्ण।",
+"In <i>Moti Ram v. State of M.P.</i>, the Supreme Court held you cannot be kept in jail only because you are too poor to arrange a surety. Tell the court you cannot afford one and ask for release on a personal bond.":
+ "<i>Moti Ram बनाम म.प्र. राज्य</i> में उच्चतम न्यायालय ने कहा कि केवल इसलिए कि आप जमानती की व्यवस्था करने में असमर्थ हैं, आपको कारागार में नहीं रखा जा सकता। न्यायालय को बताएँ कि आप असमर्थ हैं और निजी मुचलके पर रिहाई माँगें।"
+});
+
+/* ---------- ENGINE: FIXED STRINGS ---------- */
+D({
+"Bail as of right — s.436 CrPC / s.478 BNSS":"अधिकारस्वरूप जमानत — धारा 436 दं.प्र.सं. / धारा 478 भा.ना.सु.सं.",
+"Every charge framed is a bailable offence. Release on bond is mandatory; refusal is illegal.":
+ "लगाए गए सभी आरोप जमानती अपराध हैं। मुचलके पर रिहाई अनिवार्य है; अस्वीकार करना अवैध है।",
+"Default / statutory bail — s.167(2) CrPC / s.187 BNSS":"डिफ़ॉल्ट / वैधानिक जमानत — धारा 167(2) दं.प्र.सं. / धारा 187 भा.ना.सु.सं.",
+"Release — detention exceeds maximum sentence":"रिहाई — हिरासत अधिकतम सज़ा से अधिक",
+"s.436A CrPC / s.479 BNSS — half-term (or one-third) release":
+ "धारा 436A दं.प्र.सं. / धारा 479 भा.ना.सु.सं. — आधी (या एक-तिहाई) अवधि पर रिहाई",
+"Regular bail — s.439 CrPC / s.483 BNSS":"नियमित जमानत — धारा 439 दं.प्र.सं. / धारा 483 भा.ना.सु.सं.",
+"Compounding — s.320 CrPC / s.359 BNSS":"शमन — धारा 320 दं.प्र.सं. / धारा 359 भा.ना.सु.सं.",
+"Plea bargaining — Ch. XXI-A CrPC / Ch. XXIII BNSS":"अभिवाक् सौदेबाजी — अध्याय XXI-A दं.प्र.सं. / अध्याय XXIII भा.ना.सु.सं.",
+"Bail is a matter of right u/s 436 CrPC / s.478 BNSS. The officer-in-charge or the Magistrate must release on bond.":
+ "धारा 436 दं.प्र.सं. / धारा 478 भा.ना.सु.सं. के अंतर्गत जमानत अधिकार का विषय है। थानाध्यक्ष या मजिस्ट्रेट को मुचलके पर रिहा करना होगा।",
+"One or more charges are compoundable. A recorded settlement with the victim can lead to acquittal and moots the bail question. Cheque-bounce matters are fully compoundable u/s 147 NI Act.":
+ "एक या अधिक आरोप शमनीय हैं। पीड़ित के साथ अभिलिखित समझौता दोषमुक्ति दिला सकता है और जमानत का प्रश्न ही समाप्त कर देता है। चेक अनादर के मामले धारा 147 परक्राम्य लिखत अधिनियम के अंतर्गत पूर्णतः शमनीय हैं।",
+"Offence is punishable with 7 years or less and is not against a woman or a child under 14 — a mutually satisfactory disposition may end the matter with a reduced sentence.":
+ "अपराध 7 वर्ष या उससे कम से दंडनीय है और किसी महिला या 14 वर्ष से कम आयु के बालक के विरुद्ध नहीं है — पारस्परिक संतोषजनक निपटारे से मामला कम सज़ा के साथ समाप्त हो सकता है।",
+"s.436A CrPC / s.479 BNSS does not apply — an offence punishable with death is alleged.":
+ "धारा 436A दं.प्र.सं. / धारा 479 भा.ना.सु.सं. लागू नहीं — मृत्युदंड से दंडनीय अपराध का आरोप है।",
+"Maximum sentence includes life imprisonment; the half-term rule has no fixed denominator. Bail must be sought on merits u/s 439 CrPC / s.483 BNSS.":
+ "अधिकतम सज़ा में आजीवन कारावास सम्मिलित है; आधी-अवधि नियम का कोई निश्चित हर नहीं है। जमानत धारा 439 दं.प्र.सं. / धारा 483 भा.ना.सु.सं. के अंतर्गत गुण-दोष पर माँगी जानी चाहिए।",
+"Offences punishable up to 7 years. Arrest not automatic (Arnesh Kumar); if the accused co-operated with investigation, bail should ordinarily follow on filing of charge-sheet.":
+ "7 वर्ष तक से दंडनीय अपराध। गिरफ़्तारी स्वतः नहीं (Arnesh Kumar); यदि अभियुक्त ने अनुसंधान में सहयोग किया है, तो आरोप-पत्र दाखिल होने पर सामान्यतः जमानत मिलनी चाहिए।",
+"Offences under special Acts with stringent bail provisions. Bail application to be decided within 2 weeks (Satender Kumar Antil).":
+ "कठोर जमानत प्रावधानों वाले विशेष अधिनियमों के अंतर्गत अपराध। जमानत आवेदन 2 सप्ताह में निर्णीत हो (Satender Kumar Antil)।",
+"Economic offence — gravity alone is not a ground for refusal (Sanjay Chandra), but flight risk and asset dissipation must be addressed.":
+ "आर्थिक अपराध — केवल गंभीरता अस्वीकृति का आधार नहीं (Sanjay Chandra), किंतु फरार होने के जोखिम और संपत्ति के अपव्यय को संबोधित करना होगा।",
+"Offences punishable with death, life or more than 7 years. Bail on merits after hearing the prosecution; the triple test governs.":
+ "मृत्युदंड, आजीवन कारावास या 7 वर्ष से अधिक से दंडनीय अपराध। अभियोजन को सुनने के बाद गुण-दोष पर जमानत; त्रि-परीक्षण लागू होगा।",
+"PMLA s.45 proviso available: accused is a woman / under 16 / sick or infirm / amount involved below Rs.1 crore — the twin conditions need not be satisfied.":
+ "PMLA धारा 45 का परंतुक उपलब्ध: अभियुक्त महिला / 16 वर्ष से कम / बीमार या अशक्त है अथवा संलिप्त राशि 1 करोड़ रु. से कम है — दोहरी शर्तें पूरी करना आवश्यक नहीं।",
+"Only small/intermediate quantity alleged — the s.37 NDPS twin-condition bar is NOT attracted (Rhea Chakraborty, 2020).":
+ "केवल अल्प/मध्यम मात्रा का आरोप — NDPS धारा 37 की दोहरी-शर्त रोक लागू नहीं होती (Rhea Chakraborty, 2020)।",
+/* risk reasons */
+"Foreign national — risk of leaving the jurisdiction.":"विदेशी नागरिक — अधिकारिता छोड़कर जाने का जोखिम।",
+"Passport surrendered — mitigates flight risk.":"पासपोर्ट जमा — फरार होने का जोखिम कम करता है।",
+"Passport deposited with the court.":"पासपोर्ट न्यायालय में जमा।",
+"Previously absconded / proclaimed offender.":"पूर्व में फरार / उद्घोषित अपराधी।",
+"No verified permanent local address or family ties.":"कोई सत्यापित स्थायी स्थानीय पता या पारिवारिक संबंध नहीं।",
+"Verified local roots and family ties.":"सत्यापित स्थानीय जड़ें एवं पारिवारिक संबंध।",
+"Severity of the potential sentence is itself an incentive to abscond.":"संभावित सज़ा की गंभीरता स्वयं फरार होने का प्रोत्साहन है।",
+"Accused holds a position of influence/authority.":"अभियुक्त प्रभाव/प्राधिकार के पद पर है।",
+"Investigation incomplete — documentary/electronic evidence not yet secured.":"अनुसंधान अपूर्ण — दस्तावेजी/इलेक्ट्रॉनिक साक्ष्य अभी सुरक्षित नहीं।",
+"Charge-sheet filed; evidence is now on record and largely documentary.":"आरोप-पत्र दाखिल; साक्ष्य अब अभिलेख पर है और अधिकांशतः दस्तावेजी है।",
+"Cyber offence — digital evidence may be remotely deleted before seizure/mirroring.":"साइबर अपराध — अभिग्रहण/प्रतिबिंबन से पूर्व डिजिटल साक्ष्य दूरस्थ रूप से मिटाया जा सकता है।",
+"Economic offence — records may be fabricated or destroyed.":"आर्थिक अपराध — अभिलेख गढ़े या नष्ट किए जा सकते हैं।",
+"Specific allegation of threat to a witness/complainant.":"साक्षी/परिवादी को धमकी का विशिष्ट आरोप।",
+"Accused is known to / related to the victim.":"अभियुक्त पीड़ित का परिचित / संबंधी है।",
+"Vulnerable victim category — protection of the victim is a mandatory consideration.":"संवेदनशील पीड़ित श्रेणी — पीड़ित की सुरक्षा अनिवार्य विचारणीय तत्व है।",
+"Capacity to influence witnesses due to standing.":"प्रतिष्ठा के कारण साक्षियों को प्रभावित करने की क्षमता।",
+"Trial has commenced; material witnesses may already be examined.":"विचारण प्रारंभ हो चुका है; तात्विक साक्षी पहले ही परीक्षित हो सकते हैं।",
+/* conditions */
+"Shall not directly or indirectly influence any witness or tamper with evidence.":
+ "किसी साक्षी को प्रत्यक्ष या अप्रत्यक्ष रूप से प्रभावित नहीं करेगा और न ही साक्ष्य से छेड़छाड़ करेगा।",
+"Shall attend the court on every date fixed.":"प्रत्येक नियत तिथि पर न्यायालय में उपस्थित रहेगा।",
+"Shall surrender the passport and shall not leave the country without leave of the court.":
+ "पासपोर्ट जमा करेगा और न्यायालय की अनुमति के बिना देश नहीं छोड़ेगा।",
+"Shall report to the SHO of the jurisdictional police station on the first Monday of every month.":
+ "प्रत्येक माह के प्रथम सोमवार को संबंधित थाना प्रभारी के समक्ष उपस्थित होगा।",
+"Shall not enter the locality of the complainant/victim or contact them by any means.":
+ "परिवादी/पीड़ित के क्षेत्र में प्रवेश नहीं करेगा और न ही किसी माध्यम से संपर्क करेगा।",
+"Shall not access the seized devices/accounts and shall preserve all digital records.":
+ "अभिगृहीत उपकरणों/खातों तक पहुँच नहीं बनाएगा और समस्त डिजिटल अभिलेख सुरक्षित रखेगा।",
+"Shall not alienate or create third-party rights in the attached assets; shall join investigation as and when required.":
+ "कुर्क संपत्ति का अंतरण नहीं करेगा और न ही तृतीय-पक्ष अधिकार सृजित करेगा; आवश्यकतानुसार अनुसंधान में सम्मिलित होगा।",
+"Shall not change the declared residential address without prior intimation to the court and the FRRO.":
+ "न्यायालय और FRRO को पूर्व सूचना दिए बिना घोषित आवासीय पता नहीं बदलेगा।",
+/* procedural */
+"Personal bond":"निजी मुचलका","Surety bond":"जमानती मुचलका","Identity verification":"पहचान सत्यापन",
+"Verification report":"सत्यापन रिपोर्ट","Fine / compensation":"जुर्माना / प्रतिकर",
+"Attendance undertaking":"उपस्थिति वचनबंध","Indigent prisoner relief":"निर्धन बंदी राहत",
+"Aadhaar / voter ID / ration card of accused and each surety; address verified by the SHO of the local police station.":
+ "अभियुक्त एवं प्रत्येक जमानती का आधार / मतदाता पहचान-पत्र / राशन कार्ड; पता स्थानीय थाना प्रभारी द्वारा सत्यापित।",
+"Court will call for a surety verification report; in jail-bail cases the Superintendent forwards the bond.":
+ "न्यायालय जमानती सत्यापन रिपोर्ट माँगेगा; जेल-जमानत मामलों में अधीक्षक मुचलका अग्रेषित करता है।",
+"If compounding, deposit the settlement/compensation amount before the court.":
+ "शमन की स्थिति में समझौता/प्रतिकर राशि न्यायालय में जमा करें।",
+"Not applicable at bail stage; fines arise only on conviction.":"जमानत के स्तर पर लागू नहीं; जुर्माना केवल दोषसिद्धि पर लगता है।",
+"Undertaking to attend every hearing and not to seek unnecessary adjournments; mobile number and address on affidavit u/s 88 CrPC / s.91 BNSS.":
+ "प्रत्येक सुनवाई में उपस्थित रहने और अनावश्यक स्थगन न माँगने का वचनबंध; धारा 88 दं.प्र.सं. / धारा 91 भा.ना.सु.सं. के अंतर्गत शपथपत्र पर मोबाइल नंबर एवं पता।",
+"Move for release on personal bond without sureties; seek assistance from DLSA and the Undertrial Review Committee. Poverty cannot be a ground for continued detention (Moti Ram).":
+ "बिना जमानती के निजी मुचलके पर रिहाई हेतु आवेदन करें; DLSA और विचाराधीन बंदी समीक्षा समिति से सहायता लें। निर्धनता निरंतर निरोध का आधार नहीं हो सकती (Moti Ram)।",
+"Passport to be deposited; FRRO and the Embassy/High Commission to be notified; consular access under Art.36 VCCR; a local Indian surety is normally insisted upon.":
+ "पासपोर्ट जमा किया जाए; FRRO तथा दूतावास/उच्चायोग को सूचित किया जाए; VCCR अनुच्छेद 36 के अंतर्गत वाणिज्यदूतीय पहुँच; सामान्यतः स्थानीय भारतीय जमानती आवश्यक।",
+"Two sureties in the like amount, at least one local and solvent":"समान राशि के दो जमानती, कम से कम एक स्थानीय एवं शोधक्षम",
+"One or two sureties of sound means":"पर्याप्त साधन वाले एक या दो जमानती",
+"One local surety":"एक स्थानीय जमानती",
+"Personal bond; surety may be dispensed with":"निजी मुचलका; जमानती से छूट दी जा सकती है",
+/* trace rule names */
+"Gravest-charge rule":"गंभीरतम-आरोप नियम","Bailability aggregation":"जमानतीयता समुच्चय",
+"s.436A CrPC / s.479 BNSS":"धारा 436A दं.प्र.सं. / धारा 479 भा.ना.सु.सं.",
+"Default bail — s.167(2) CrPC / s.187 BNSS":"डिफ़ॉल्ट जमानत — धारा 167(2) दं.प्र.सं. / धारा 187 भा.ना.सु.सं.",
+"Satender Kumar Antil v. CBI (2022)":"Satender Kumar Antil बनाम CBI (2022)",
+"Triple test — P. Chidambaram v. ED (2019)":"त्रि-परीक्षण — P. Chidambaram बनाम ED (2019)",
+"Final verdict":"अंतिम निष्कर्ष",
+"Every charge is bailable — s.436 CrPC / s.478 BNSS entitlement.":
+ "प्रत्येक आरोप जमानती है — धारा 436 दं.प्र.सं. / धारा 478 भा.ना.सु.सं. का अधिकार।",
+"At least one non-bailable charge — s.437/439 CrPC / s.480/483 BNSS applies.":
+ "कम से कम एक गैर-जमानती आरोप — धारा 437/439 दं.प्र.सं. / धारा 480/483 भा.ना.सु.सं. लागू।",
+"THRESHOLD CROSSED":"सीमा पार हो चुकी","not yet reached":"अभी तक नहीं पहुँची",
+"INDEFEASIBLE RIGHT ACCRUED":"अनपहरणीय अधिकार अर्जित","not available":"उपलब्ध नहीं",
+"filed":"दाखिल","NOT filed":"दाखिल नहीं","expired":"समाप्त","still running":"अभी चल रही",
+"one-half (s.436A CrPC / s.479(1) BNSS)":"आधी (धारा 436A दं.प्र.सं. / धारा 479(1) भा.ना.सु.सं.)",
+"one-third (s.479(1) proviso BNSS — first-time offender)":"एक-तिहाई (धारा 479(1) परंतुक भा.ना.सु.सं. — प्रथम बार का अपराधी)",
+"UAPA s.43D(2)(b)":"UAPA धारा 43D(2)(b)","NDPS s.36A(4)":"NDPS धारा 36A(4)",
+"s.167(2)(a)(i) CrPC / s.187(3) BNSS — offence punishable with 10 yrs+/life/death":
+ "धारा 167(2)(a)(i) दं.प्र.सं. / धारा 187(3) भा.ना.सु.सं. — 10 वर्ष+/आजीवन/मृत्युदंड से दंडनीय अपराध",
+"s.167(2)(a)(ii) CrPC / s.187(3) BNSS":"धारा 167(2)(a)(ii) दं.प्र.सं. / धारा 187(3) भा.ना.सु.सं.",
+"UAPA s.43D(5)":"UAPA धारा 43D(5)","PMLA s.45 (twin conditions)":"PMLA धारा 45 (दोहरी शर्तें)",
+"NDPS s.37 (twin conditions)":"NDPS धारा 37 (दोहरी शर्तें)",
+"SC/ST Act s.18 (anticipatory bail bar only)":"अ.जा./अ.ज.जा. अधिनियम धारा 18 (केवल अग्रिम जमानत पर रोक)",
+"SC/ST Act s.18":"अ.जा./अ.ज.जा. अधिनियम धारा 18",
+"POCSO s.29 presumption":"POCSO धारा 29 उपधारणा","BNS s.111 organised crime":"भा.न्या.सं. धारा 111 संगठित अपराध",
+"Sessions":"सत्र न्यायालय","Magistrate":"मजिस्ट्रेट","Any Magistrate":"कोई भी मजिस्ट्रेट",
+"Special (POCSO) Court":"विशेष (POCSO) न्यायालय","Magistrate / CWC":"मजिस्ट्रेट / बाल कल्याण समिति",
+"Special Court":"विशेष न्यायालय","Magistrate / Special Court":"मजिस्ट्रेट / विशेष न्यायालय",
+"Special Court (NIA)":"विशेष न्यायालय (NIA)","Special Judge":"विशेष न्यायाधीश",
+"Adjudicating Authority":"न्यायनिर्णायक प्राधिकारी","Designated Court":"पदाभिहित न्यायालय",
+"Magistrate / Sessions":"मजिस्ट्रेट / सत्र न्यायालय",
+"Court of Session / Special Court":"सत्र न्यायालय / विशेष न्यायालय","Magistrate, then Sessions":"मजिस्ट्रेट, तत्पश्चात सत्र न्यायालय",
+"Non-compoundable":"अशमनीय","Compoundable by the victim":"पीड़ित द्वारा शमनीय",
+"Compoundable with Court permission":"न्यायालय की अनुमति से शमनीय",
+"Compoundable with Court permission (BNS)":"न्यायालय की अनुमति से शमनीय (भा.न्या.सं.)",
+"Compoundable by owner":"स्वामी द्वारा शमनीय",
+"Non-compoundable (compoundable in some States)":"अशमनीय (कुछ राज्यों में शमनीय)",
+"Compoundable u/s 77A IT Act":"धारा 77A सू.प्रौ. अधिनियम के अंतर्गत शमनीय",
+"Compoundable u/s 77A":"धारा 77A के अंतर्गत शमनीय",
+"Compoundable u/s 147 NI Act":"धारा 147 परक्राम्य लिखत अधिनियम के अंतर्गत शमनीय",
+"Compoundable u/s 137(3)":"धारा 137(3) के अंतर्गत शमनीय",
+"Compoundable u/s 138":"धारा 138 के अंतर्गत शमनीय","Compoundable":"शमनीय",
+"Life imprisonment":"आजीवन कारावास","Death / Life":"मृत्युदंड / आजीवन","No custodial sentence":"कोई कारावास नहीं"
+});
+
+/* ---------- OFFENCE TITLES ---------- */
+D({
+"Murder":"हत्या","Culpable homicide not amounting to murder":"आपराधिक मानव वध जो हत्या नहीं है",
+"Causing death by negligence":"उपेक्षा द्वारा मृत्यु कारित करना","Attempt to murder":"हत्या का प्रयास",
+"Voluntarily causing hurt":"स्वेच्छया उपहति कारित करना",
+"Voluntarily causing hurt by dangerous weapons":"खतरनाक हथियारों से स्वेच्छया उपहति कारित करना",
+"Voluntarily causing grievous hurt":"स्वेच्छया घोर उपहति कारित करना",
+"Wrongful restraint":"सदोष अवरोध","Wrongful confinement":"सदोष परिरोध","Theft":"चोरी",
+"Theft in dwelling house":"निवास गृह में चोरी","Robbery":"लूट","Dacoity":"डकैती",
+"Receiving stolen property":"चुराई गई संपत्ति प्राप्त करना",
+"Cheating and dishonestly inducing delivery of property":"छल तथा बेईमानी से संपत्ति परिदान हेतु उत्प्रेरण",
+"Criminal breach of trust":"आपराधिक न्यासभंग","Forgery for purpose of cheating":"छल के प्रयोजन से कूटरचना",
+"Using as genuine a forged document":"कूटरचित दस्तावेज़ का असली के रूप में उपयोग",
+"Cruelty by husband or relatives":"पति या नातेदारों द्वारा क्रूरता","Criminal intimidation":"आपराधिक अभित्रास",
+"Word/gesture insulting modesty of a woman":"स्त्री की लज्जा का अपमान करने वाला शब्द/संकेत",
+"Unlawful assembly":"विधिविरुद्ध जमाव",
+"Assault to deter public servant from duty":"लोक सेवक को कर्तव्य से विरत करने हेतु हमला",
+"Rape":"बलात्संग","Gang rape":"सामूहिक बलात्संग",
+"Assault on woman with intent to outrage modesty":"स्त्री की लज्जा भंग करने के आशय से हमला",
+"Stalking":"पीछा करना","Dowry death":"दहेज मृत्यु","Giving or taking dowry":"दहेज देना या लेना",
+"Breach of protection order":"संरक्षण आदेश का उल्लंघन",
+"Penetrative sexual assault on a child":"बालक पर प्रवेशन लैंगिक हमला",
+"Sexual assault on a child":"बालक पर लैंगिक हमला","Sexual harassment of a child":"बालक का लैंगिक उत्पीड़न",
+"Storage/possession of child pornographic material":"बाल अश्लील सामग्री का भंडारण/कब्ज़ा",
+"Cruelty to a child":"बालक के प्रति क्रूरता",
+"Employment of child in hazardous work":"संकटमय कार्य में बालक का नियोजन",
+"Kidnapping":"व्यपहरण","Trafficking of persons":"व्यक्तियों का दुर्व्यापार",
+"Atrocity against a member of SC/ST (humiliation, assault, etc.)":"अ.जा./अ.ज.जा. सदस्य के विरुद्ध अत्याचार (अपमान, हमला आदि)",
+"IPC/BNS offence (10 yrs+) committed on ground of caste":"जाति के आधार पर किया गया भा.दं.सं./भा.न्या.सं. अपराध (10 वर्ष+)",
+"Enforcing untouchability disability":"अस्पृश्यता संबंधी निर्योग्यता लागू करना",
+"Computer related offences (hacking)":"कंप्यूटर संबंधी अपराध (हैकिंग)","Identity theft":"पहचान की चोरी",
+"Cheating by personation using computer resource":"कंप्यूटर संसाधन द्वारा प्रतिरूपण से छल",
+"Violation of privacy (capturing private images)":"निजता का उल्लंघन (निजी छवियाँ लेना)",
+"Cyber terrorism":"साइबर आतंकवाद",
+"Publishing obscene material in electronic form":"इलेक्ट्रॉनिक रूप में अश्लील सामग्री प्रकाशित करना",
+"Child sexually abusive material in electronic form":"इलेक्ट्रॉनिक रूप में बाल लैंगिक दुर्व्यवहार सामग्री",
+"Cheating by personation (incl. online)":"प्रतिरूपण द्वारा छल (ऑनलाइन सहित)",
+"Organised crime (incl. cyber-crime syndicates)":"संगठित अपराध (साइबर अपराध गिरोह सहित)",
+"Waging war against the Government of India":"भारत सरकार के विरुद्ध युद्ध छेड़ना",
+"Acts endangering sovereignty, unity and integrity of India":"भारत की संप्रभुता, एकता एवं अखंडता को संकट में डालने वाले कार्य",
+"Unlawful activity":"विधिविरुद्ध क्रियाकलाप","Terrorist act":"आतंकवादी कृत्य",
+"Member of a terrorist gang or organisation":"आतंकवादी गिरोह या संगठन का सदस्य",
+"Spying":"जासूसी","Attempt to cause explosion":"विस्फोट कारित करने का प्रयास",
+"Money laundering":"धन शोधन","Commercial quantity — narcotic drug":"वाणिज्यिक मात्रा — स्वापक औषधि",
+"Intermediate quantity — narcotic drug":"मध्यम मात्रा — स्वापक औषधि",
+"Small quantity — narcotic drug":"अल्प मात्रा — स्वापक औषधि",
+"Public servant taking undue advantage":"लोक सेवक द्वारा अनुचित लाभ लेना",
+"Criminal misconduct by a public servant":"लोक सेवक द्वारा आपराधिक अवचार",
+"Dishonour of cheque":"चेक का अनादर","Evasion of duty / smuggling":"शुल्क चोरी / तस्करी",
+"Tax evasion / fake invoicing above Rs.5 crore":"कर चोरी / 5 करोड़ रु. से अधिक का फर्जी बीजक",
+"Foreign exchange contravention":"विदेशी मुद्रा उल्लंघन",
+"Fraudulent default in deposit repayment":"निक्षेप प्रतिदाय में कपटपूर्ण व्यतिक्रम",
+"Overstay / entry without valid visa":"अवधि से अधिक ठहराव / वैध वीज़ा बिना प्रवेश",
+"Entry into a restricted/protected area":"प्रतिबंधित/संरक्षित क्षेत्र में प्रवेश",
+"Entry without a valid passport":"वैध पासपोर्ट बिना प्रवेश",
+"Offence committed against a foreign tourist":"विदेशी पर्यटक के विरुद्ध किया गया अपराध"
+});
+
+
+/* ---------- FRAGMENTS INTRODUCED BY UI COMPOSITION ---------- */
+D({
+"you have been in custody for":"आप हिरासत में रह चुके हैं",
+"You become eligible on":"आप पात्र होंगे","which is":"जो है","from now.":"अब से।",
+"Default bail":"डिफ़ॉल्ट जमानत","The charge-sheet was due by":"आरोप-पत्र देय था",
+"Threshold:":"सीमा:","of":"का","Served":"बिताई गई अवधि","of the":"की","threshold.":"सीमा।",
+"Eligible on":"पात्र तिथि","in":"में",
+"Threshold crossed — release on personal bond is mandated.":"सीमा पार — निजी मुचलके पर रिहाई अनिवार्य है।",
+"Custody already exceeds the maximum sentence.":"हिरासत पहले ही अधिकतम सज़ा से अधिक है।",
+"Continued detention violates Article 21 (Hussainara Khatoon). Immediate release is required.":
+ "निरंतर निरोध अनुच्छेद 21 का उल्लंघन है (Hussainara Khatoon)। तत्काल रिहाई आवश्यक है।",
+"Default bail.":"डिफ़ॉल्ट जमानत।","under":"के अंतर्गत","Charge-sheet due by":"आरोप-पत्र देय",
+"Window expired with no charge-sheet — an indefeasible right has accrued.":
+ "अवधि समाप्त और कोई आरोप-पत्र नहीं — अनपहरणीय अधिकार अर्जित हो चुका है।",
+"Composite":"संयुक्त",
+"This score is advisory. The court must apply its own mind and record reasons — <i>P. Chidambaram v. ED</i> (2019) 9 SCC 24.":
+ "यह अंक सांकेतिक है। न्यायालय को स्वविवेक का प्रयोग कर कारण अभिलिखित करने होंगे — <i>P. Chidambaram बनाम ED</i> (2019) 9 SCC 24।",
+"Every conclusion is derived from codified statute and binding precedent, not from a predictive model. No opaque algorithm decides liberty — the court retains full discretion.":
+ "प्रत्येक निष्कर्ष संहिताबद्ध विधि एवं बाध्यकारी पूर्व-निर्णयों से निकाला गया है, किसी पूर्वानुमान मॉडल से नहीं। कोई अपारदर्शी एल्गोरिद्म स्वतंत्रता का निर्णय नहीं करता — न्यायालय के पास पूर्ण विवेकाधिकार रहता है।",
+"Auto-composed from the result above. Verify every citation and fact before filing.":
+ "उपरोक्त परिणाम से स्वतः रचित। दाखिल करने से पूर्व प्रत्येक उद्धरण एवं तथ्य सत्यापित करें।",
+"Duty of the Jail Superintendent under s.479(3) BNSS to report eligible undertrials, read with <i>In Re: Inhuman Conditions in 1382 Prisons</i> (2016) 3 SCC 700 requiring quarterly UTRC sittings. Sorted by priority for release — click any row to open the full result.":
+ "धारा 479(3) भा.ना.सु.सं. के अंतर्गत पात्र विचाराधीन बंदियों की सूचना देना कारागार अधीक्षक का कर्तव्य है, साथ ही <i>In Re: Inhuman Conditions in 1382 Prisons</i> (2016) 3 SCC 700 के अनुसार त्रैमासिक UTRC बैठकें आवश्यक हैं। रिहाई की प्राथमिकता के क्रम में — पूर्ण परिणाम हेतु किसी भी पंक्ति पर क्लिक करें।",
+"Immediate reference to the jurisdictional Magistrate is required.":"संबंधित मजिस्ट्रेट को तत्काल निर्देशन आवश्यक है।",
+"This roster is synthetic demonstration data. In deployment it binds to the ePrisons undertrial register over the ICJS bus and re-screens nightly.":
+ "यह सूची कृत्रिम प्रदर्शन डेटा है। वास्तविक उपयोग में यह ICJS बस के माध्यम से ePrisons विचाराधीन बंदी पंजी से जुड़ती है और प्रतिरात्रि पुनः जाँच करती है।",
+"offences mapped across the Indian Penal Code, the Bharatiya Nyaya Sanhita 2023 and the special statutes, with maximum and minimum sentence, cognizability, bailability, compounding status and trial forum. This is the knowledge base the eligibility engine reads from.":
+ "अपराध भारतीय दंड संहिता, भारतीय न्याय संहिता 2023 तथा विशेष अधिनियमों में मानचित्रित, अधिकतम एवं न्यूनतम सज़ा, संज्ञेयता, जमानतीयता, शमन स्थिति और विचारण न्यायालय सहित। पात्रता इंजन इसी ज्ञान-आधार से पढ़ता है।",
+"1. Charges":"1. आरोप","2. Custody details":"2. हिरासत विवरण","3. Other factors":"3. अन्य कारक",
+"Category A":"श्रेणी A","Category B":"श्रेणी B","Category C/D":"श्रेणी C/D","Category D":"श्रेणी D"
+});
+
+
+/* ---------- OFFENCE NOTES ---------- */
+D({
+"Triable by Sessions; bail only by Sessions/High Court under s.439 CrPC / s.483 BNSS.":"सत्र न्यायालय द्वारा विचारणीय; जमानत केवल सत्र/उच्च न्यायालय से धारा 439 दं.प्र.सं. / धारा 483 भा.ना.सु.सं. के अंतर्गत।",
+"Bailable — bail is a matter of right u/s 436 CrPC / s.478 BNSS.":"जमानती — धारा 436 दं.प्र.सं. / धारा 478 भा.ना.सु.सं. के अंतर्गत जमानत अधिकार का विषय है।",
+"Compoundable without court permission — settlement can end the case.":"न्यायालय की अनुमति बिना शमनीय — समझौते से मामला समाप्त हो सकता है।",
+"Petty offence — consider release on personal bond / plea of guilt.":"लघु अपराध — निजी मुचलके पर रिहाई / दोष स्वीकारोक्ति पर विचार करें।",
+"BNS 303(2): first-time petty theft under Rs.5,000 on restoration — community service possible.":"भा.न्या.सं. 303(2): 5,000 रु. से कम की प्रथम बार लघु चोरी, वापसी पर — सामुदायिक सेवा संभव।",
+"Frequently settled; compounding with court leave is a strong bail/closure route.":"प्रायः समझौता हो जाता है; न्यायालय की अनुमति से शमन जमानत/समापन का प्रबल मार्ग है।",
+"Arnesh Kumar v. State of Bihar (2014): notice u/s 41A CrPC / s.35 BNSS instead of arrest for offences ≤ 7 years.":"Arnesh Kumar बनाम बिहार राज्य (2014): 7 वर्ष तक के अपराधों में गिरफ़्तारी के स्थान पर धारा 41A दं.प्र.सं. / धारा 35 भा.ना.सु.सं. की सूचना।",
+"Mandatory minimum 10 years. Victim must be heard before bail (s.439(1A) CrPC / s.483 BNSS).":"अनिवार्य न्यूनतम 10 वर्ष। जमानत से पूर्व पीड़ित को सुना जाना आवश्यक (धारा 439(1A) दं.प्र.सं. / धारा 483 भा.ना.सु.सं.)।",
+"Judge's discretion is narrow; bail generally on merits after charge-sheet.":"न्यायाधीश का विवेकाधिकार सीमित है; जमानत सामान्यतः आरोप-पत्र के बाद गुण-दोष पर।",
+"Minimum 20 years extending to life (remainder of natural life).":"न्यूनतम 20 वर्ष, आजीवन (शेष प्राकृतिक जीवन) तक विस्तारित।",
+"First conviction bailable; second/subsequent offence non-bailable, up to 5 years.":"प्रथम दोषसिद्धि जमानती; द्वितीय/परवर्ती अपराध गैर-जमानती, 5 वर्ष तक।",
+"Presumption u/s 113B Indian Evidence Act / s.118 BSA 2023 applies.":"धारा 113B भारतीय साक्ष्य अधिनियम / धारा 118 भा.सा.अ. 2023 की उपधारणा लागू।",
+"Minimum 5 years and fine of Rs.15,000 or amount of dowry.":"न्यूनतम 5 वर्ष तथा 15,000 रु. या दहेज की राशि का जुर्माना।",
+"Minimum 20 years where child under 16. Presumption of guilt u/s 29 POCSO shifts burden once foundational facts are shown.":"16 वर्ष से कम आयु के बालक होने पर न्यूनतम 20 वर्ष। आधारभूत तथ्य दर्शित होने पर धारा 29 POCSO की दोष उपधारणा भार स्थानांतरित कर देती है।",
+"Bail only from Special Court/High Court; child's interest is paramount.":"जमानत केवल विशेष न्यायालय/उच्च न्यायालय से; बालक का हित सर्वोपरि है।",
+"Read with s.67B IT Act, 2000.":"धारा 67B सू.प्रौ. अधिनियम, 2000 के साथ पठित।",
+"Higher punishment where victim is a minor — up to life.":"पीड़ित अवयस्क होने पर अधिक दंड — आजीवन तक।",
+"s.18 bars anticipatory bail (s.438 CrPC / s.482 BNSS). Regular bail u/s 439 CrPC / s.483 BNSS is still available.":"धारा 18 अग्रिम जमानत पर रोक लगाती है (धारा 438 दं.प्र.सं. / धारा 482 भा.ना.सु.सं.)। धारा 439 दं.प्र.सं. / धारा 483 भा.ना.सु.सं. के अंतर्गत नियमित जमानत फिर भी उपलब्ध है।",
+"Appeal against bail order lies to High Court u/s 14A(2) of the Act.":"जमानत आदेश के विरुद्ध अपील अधिनियम की धारा 14A(2) के अंतर्गत उच्च न्यायालय में होगी।",
+"Prathvi Raj Chauhan v. UOI (2020) upheld s.18A; bar does not apply if complaint prima facie makes out no offence.":"Prathvi Raj Chauhan बनाम भारत संघ (2020) ने धारा 18A को वैध ठहराया; यदि परिवाद प्रथम दृष्टया कोई अपराध नहीं बनाता तो रोक लागू नहीं।",
+"Attracts imprisonment for life plus fine.":"आजीवन कारावास तथा जुर्माना आकर्षित करता है।",
+"s.77A allows compounding of offences other than those punishable with life/over 3 years.":"धारा 77A आजीवन/3 वर्ष से अधिक से दंडनीय अपराधों के अतिरिक्त अन्य अपराधों के शमन की अनुमति देती है।",
+"Usually charged with BNS 318(4)/IPC 420, which is non-bailable — the graver section governs.":"सामान्यतः भा.न्या.सं. 318(4)/भा.दं.सं. 420 के साथ आरोपित, जो गैर-जमानती है — गंभीरतर धारा लागू होगी।",
+"Punishable with imprisonment for life; treated at par with terror offences for bail.":"आजीवन कारावास से दंडनीय; जमानत हेतु आतंकवादी अपराधों के समकक्ष माना जाता है।",
+"Second conviction: 5 years — non-bailable.":"द्वितीय दोषसिद्धि: 5 वर्ष — गैर-जमानती।",
+"Read with POCSO s.15.":"POCSO धारा 15 के साथ पठित।",
+"New offence under BNS; stringent, minimum 5 years.":"भा.न्या.सं. के अंतर्गत नया अपराध; कठोर, न्यूनतम 5 वर्ष।",
+"S.G. Vombatkere v. UOI (2022): IPC 124A proceedings kept in abeyance; BNS 152 is the successor provision.":"S.G. Vombatkere बनाम भारत संघ (2022): भा.दं.सं. 124A की कार्यवाहियाँ स्थगित रखी गईं; भा.न्या.सं. 152 उत्तरवर्ती प्रावधान है।",
+"s.43D(5) bar applies to Ch.IV & VI offences.":"धारा 43D(5) की रोक अध्याय IV एवं VI के अपराधों पर लागू।",
+"s.43D(5): bail barred if court is of opinion that accusation is prima facie true — NIA v. Zahoor Ahmad Shah Watali (2019).":"धारा 43D(5): यदि न्यायालय की राय में आरोप प्रथम दृष्टया सत्य है तो जमानत वर्जित — NIA बनाम Zahoor Ahmad Shah Watali (2019)।",
+"But Union of India v. K.A. Najeeb (2021): long incarceration + unlikelihood of early trial permits bail despite s.43D(5) (Art.21).":"किंतु भारत संघ बनाम K.A. Najeeb (2021): दीर्घ कारावास तथा शीघ्र विचारण की अनिश्चितता धारा 43D(5) के बावजूद जमानत की अनुमति देती है (अनुच्छेद 21)।",
+"Default bail period extended to 180 days u/s 43D(2).":"धारा 43D(2) के अंतर्गत डिफ़ॉल्ट जमानत अवधि बढ़ाकर 180 दिन।",
+"s.43D(5) bar applies.":"धारा 43D(5) की रोक लागू।",
+"Sanction u/s 7 required for prosecution.":"अभियोजन हेतु धारा 7 के अंतर्गत मंजूरी आवश्यक।",
+"Twin conditions u/s 45 PMLA — upheld in Vijay Madanlal Choudhary v. UOI (2022).":"धारा 45 PMLA की दोहरी शर्तें — Vijay Madanlal Choudhary बनाम भारत संघ (2022) में वैध ठहराई गईं।",
+"Proviso: woman, person under 16, sick or infirm, or amount involved < Rs.1 crore may be released without twin conditions.":"परंतुक: महिला, 16 वर्ष से कम आयु का व्यक्ति, बीमार या अशक्त, अथवा 1 करोड़ रु. से कम की संलिप्त राशि — दोहरी शर्तों के बिना रिहा किया जा सकता है।",
+"Manish Sisodia v. ED (2024): prolonged incarceration without trial overrides statutory rigours.":"Manish Sisodia बनाम ED (2024): विचारण बिना दीर्घ कारावास वैधानिक कठोरताओं पर अभिभावी होता है।",
+"s.37 twin conditions: reasonable grounds to believe not guilty + unlikely to reoffend.":"धारा 37 की दोहरी शर्तें: दोषी न होने का युक्तियुक्त आधार तथा पुनः अपराध की अनिश्चितता।",
+"Rhea Chakraborty v. UOI (2020): s.37 rigour does not apply to small quantity.":"Rhea Chakraborty बनाम भारत संघ (2020): धारा 37 की कठोरता अल्प मात्रा पर लागू नहीं।",
+"Mohd Muslim v. State (NCT of Delhi) (2023): undue delay in trial is a ground for bail despite s.37.":"Mohd Muslim बनाम राज्य (राष्ट्रीय राजधानी क्षेत्र दिल्ली) (2023): विचारण में अनुचित विलंब धारा 37 के बावजूद जमानत का आधार है।",
+"s.37 bar does NOT apply — ordinary bail principles govern.":"धारा 37 की रोक लागू नहीं — सामान्य जमानत सिद्धांत लागू होंगे।",
+"s.37 not attracted; bail generally granted.":"धारा 37 आकर्षित नहीं; जमानत सामान्यतः स्वीकृत।",
+"Sanction u/s 19 required; s.17A approval for inquiry.":"धारा 19 के अंतर्गत मंजूरी आवश्यक; जाँच हेतु धारा 17A की अनुमति।",
+"Fully compoundable at any stage — Damodar S. Prabhu v. Sayed Babalal H. (2010) compounding-cost schedule.":"किसी भी स्तर पर पूर्णतः शमनीय — Damodar S. Prabhu बनाम Sayed Babalal H. (2010) की शमन-लागत अनुसूची।",
+"Summons case; personal bond usually sufficient.":"समन मामला; सामान्यतः निजी मुचलका पर्याप्त।",
+"Below threshold the offence is bailable and non-cognizable.":"सीमा से कम होने पर अपराध जमानती एवं असंज्ञेय है।",
+"Below Rs.5 crore: bailable and non-cognizable.":"5 करोड़ रु. से कम: जमानती एवं असंज्ञेय।",
+"FEMA contraventions are civil; no custody arises.":"FEMA उल्लंघन सिविल प्रकृति के हैं; हिरासत नहीं होती।",
+"Minimum 2 years. After sentence, detention pending deportation is common — coordinate with FRRO and the Embassy.":"न्यूनतम 2 वर्ष। सज़ा के पश्चात निर्वासन तक निरोध सामान्य है — FRRO तथा दूतावास से समन्वय करें।",
+"Consular access must be offered — Vienna Convention on Consular Relations, Art. 36.":"वाणिज्यदूतीय पहुँच प्रदान की जानी चाहिए — वाणिज्यदूतीय संबंधों पर वियना अभिसमय, अनुच्छेद 36।",
+"Fast-track trial directions apply in several States; victim may need video-conference evidence u/s 530 BNSS.":"कई राज्यों में त्वरित विचारण के निर्देश लागू; पीड़ित को धारा 530 भा.ना.सु.सं. के अंतर्गत वीडियो-कॉन्फ्रेंस साक्ष्य की आवश्यकता हो सकती है।"
+});
+
+/* ---------- CASE-LAW HOLDINGS ---------- */
+D({
+"Speedy trial is a fundamental right under Article 21; undertrials detained beyond the maximum sentence must be released.":"शीघ्र विचारण अनुच्छेद 21 के अंतर्गत मौलिक अधिकार है; अधिकतम सज़ा से अधिक निरुद्ध विचाराधीन बंदियों को रिहा किया जाना चाहिए।",
+"Bail is the rule, jail the exception; personal liberty is a constitutional value.":"जमानत नियम है, कारागार अपवाद; व्यक्तिगत स्वतंत्रता एक संवैधानिक मूल्य है।",
+"In economic offences, seriousness alone cannot justify pre-trial detention; conditions can secure attendance.":"आर्थिक अपराधों में केवल गंभीरता विचारण-पूर्व निरोध को उचित नहीं ठहराती; शर्तों द्वारा उपस्थिति सुनिश्चित की जा सकती है।",
+"For offences punishable up to 7 years, arrest is not automatic; s.41A CrPC / s.35 BNSS notice must be issued.":"7 वर्ष तक से दंडनीय अपराधों में गिरफ़्तारी स्वतः नहीं; धारा 41A दं.प्र.सं. / धारा 35 भा.ना.सु.सं. की सूचना जारी की जानी चाहिए।",
+"Lays down category A–D framework; bail applications to be decided within 2 weeks; non-arrest during investigation entitles the accused to bail on filing of charge-sheet.":"श्रेणी A–D का ढाँचा निर्धारित करता है; जमानत आवेदन 2 सप्ताह में निर्णीत हों; अनुसंधान के दौरान गिरफ़्तारी न होने पर अभियुक्त आरोप-पत्र दाखिल होने पर जमानत का हकदार है।",
+"Statutory bail bars (UAPA s.43D(5)) yield to Article 21 where trial is unlikely to conclude in reasonable time.":"जहाँ विचारण के युक्तियुक्त समय में समाप्त होने की संभावना न हो, वहाँ वैधानिक जमानत रोक (UAPA धारा 43D(5)) अनुच्छेद 21 के समक्ष नत होती है।",
+"Under UAPA s.43D(5) the court examines the material on its face without a detailed merits analysis.":"UAPA धारा 43D(5) के अंतर्गत न्यायालय सामग्री का प्रथम दृष्टया परीक्षण करता है, विस्तृत गुण-दोष विश्लेषण के बिना।",
+"PMLA s.45 twin conditions upheld as valid.":"PMLA धारा 45 की दोहरी शर्तें वैध ठहराई गईं।",
+"Prolonged incarceration without commencement of trial defeats the purpose of custody; bail must follow.":"विचारण प्रारंभ हुए बिना दीर्घ कारावास हिरासत के उद्देश्य को विफल करता है; जमानत दी जानी चाहिए।",
+"NDPS s.37 cannot be used to keep an undertrial in indefinite custody where trial is delayed.":"जहाँ विचारण विलंबित हो, वहाँ NDPS धारा 37 का प्रयोग विचाराधीन बंदी को अनिश्चितकालीन हिरासत में रखने हेतु नहीं किया जा सकता।",
+"SC/ST Act s.18A upheld; anticipatory bail bar does not operate where no prima facie case is made out.":"अ.जा./अ.ज.जा. अधिनियम की धारा 18A वैध ठहराई गई; जहाँ प्रथम दृष्टया कोई मामला न बने वहाँ अग्रिम जमानत रोक प्रभावी नहीं होती।",
+"Directions for implementation of s.436A CrPC — jurisdictional magistrates to hold sittings in jails and release eligible undertrials.":"धारा 436A दं.प्र.सं. के क्रियान्वयन हेतु निर्देश — संबंधित मजिस्ट्रेट कारागारों में बैठकें करें और पात्र विचाराधीन बंदियों को रिहा करें।",
+"Undertrial Review Committees in every district must meet quarterly to identify prisoners eligible for release.":"प्रत्येक जिले में विचाराधीन बंदी समीक्षा समितियाँ रिहाई योग्य बंदियों की पहचान हेतु त्रैमासिक बैठक करें।",
+"Excessive surety amounts are unconstitutional; indigence cannot be a ground for continued detention.":"अत्यधिक जमानत राशि असंवैधानिक है; निर्धनता निरंतर निरोध का आधार नहीं हो सकती।",
+"Courts should ordinarily consider release on personal bond without sureties where the accused is indigent.":"जहाँ अभियुक्त निर्धन हो, वहाँ न्यायालय सामान्यतः बिना जमानती के निजी मुचलके पर रिहाई पर विचार करें।",
+"Sedition prosecutions under IPC 124A kept in abeyance; pending accused entitled to seek bail.":"भा.दं.सं. 124A के अंतर्गत राजद्रोह अभियोजन स्थगित; लंबित अभियुक्त जमानत माँगने के हकदार।",
+"An accused is presumed innocent; bail should not be denied as punishment.":"अभियुक्त निर्दोष माना जाता है; जमानत दंड के रूप में अस्वीकार नहीं की जानी चाहिए।",
+"Triple test — flight risk, tampering with evidence, influencing witnesses — governs bail.":"त्रि-परीक्षण — फरार होने का जोखिम, साक्ष्य से छेड़छाड़, साक्षियों को प्रभावित करना — जमानत को नियंत्रित करता है।"
+});
+
+/* ---------- SENTENCE TEMPLATES (engine-composed strings) ---------- */
+var TPL = [
+ [/^Of (\d+) charge\(s\), the gravest is (.+) \(max (.+)\)\. Bail category is governed by it\.$/,
+  function(m){return m[1]+" आरोप(ों) में से गंभीरतम है "+tr(m[2])+" (अधिकतम "+tr(m[3])+")। जमानत श्रेणी इसी से निर्धारित होती है।"}],
+ [/^Threshold = (.+) of (.+) = (.+); served (.+) -> (.+)$/,
+  function(m){return "सीमा = "+tr(m[2])+" का "+tr(m[1])+" = "+tr(m[3])+"; बिताई गई अवधि "+tr(m[4])+" → "+tr(m[5])}],
+ [/^(.+) gives a (.+) window\. Charge-sheet (.+); window (.+) -> (.+)$/,
+  function(m){return tr(m[1])+" के अंतर्गत "+tr(m[2])+" की अवधि। आरोप-पत्र "+tr(m[3])+"; अवधि "+tr(m[4])+" → "+tr(m[5])}],
+ [/^Classified as (.+?)\. (.+)$/,function(m){return tr(m[1])+" के रूप में वर्गीकृत। "+tr(m[2])}],
+ [/^Flight (\d+), Evidence (\d+), Witness (\d+) -> composite (\d+)\/100 \((.+?)\)(.*)$/,
+  function(m){return "फरारी "+m[1]+", साक्ष्य "+m[2]+", साक्षी "+m[3]+" → संयुक्त "+m[4]+"/100 ("+tr(m[5])+")"+
+   (m[6]?m[6].replace(/\[raised to gravity floor (\d+)\]/,"[गंभीरता न्यूनतम स्तर $1 तक बढ़ाया गया]"):"")}],
+ [/^(ELIGIBLE|ARGUABLE|CONTESTED) — (\d+) route\(s\) to release identified\.$/,
+  function(m){return tr(m[1])+" — रिहाई के "+m[2]+" उपाय चिह्नित।"}],
+ [/^(.+) \((.+)\) have elapsed from remand and no charge-sheet is on record\. This is an indefeasible right \(Bikramjit Singh v\. State of Punjab, 2020\) — apply immediately and furnish bond\.$/,
+  function(m){return "रिमांड से "+tr(m[1])+" ("+tr(m[2])+") बीत चुके हैं और कोई आरोप-पत्र अभिलेख पर नहीं है। यह एक अनपहरणीय अधिकार है (Bikramjit Singh बनाम पंजाब राज्य, 2020) — तत्काल आवेदन करें और मुचलका प्रस्तुत करें।"}],
+ [/^Custody of (.+) already exceeds the maximum sentence of (.+)\. Continued detention is unconstitutional \(Hussainara Khatoon\)\.$/,
+  function(m){return tr(m[1])+" की हिरासत पहले ही "+tr(m[2])+" की अधिकतम सज़ा से अधिक है। निरंतर निरोध असंवैधानिक है (Hussainara Khatoon)।"}],
+ [/^Undertrial has served (.+), crossing the (.+) threshold of (.+)\. The court shall release on personal bond, with or without sureties\.$/,
+  function(m){return "विचाराधीन बंदी "+tr(m[1])+" बिता चुका है, जो "+tr(m[3])+" की "+tr(m[2])+" सीमा को पार करता है। न्यायालय जमानती सहित या रहित निजी मुचलके पर रिहा करेगा।"}],
+ [/^Application before the (.+)\. Triple-test risk is (.+) \((\d+)\/100\)\.$/,
+  function(m){return tr(m[1])+" के समक्ष आवेदन। त्रि-परीक्षण जोखिम "+tr(m[2])+" है ("+m[3]+"/100)।"}],
+ [/^(.+) — (.+) applies to this charge\.$/,function(m){return tr(m[1])+" — "+tr(m[2])+" इस आरोप पर लागू है।"}],
+ [/^Executed by the accused before the court\/jail superintendent — indicative quantum (.+) \(Moti Ram: quantum must not be excessive\)\.$/,
+  function(m){return "अभियुक्त द्वारा न्यायालय/कारागार अधीक्षक के समक्ष निष्पादित — सांकेतिक राशि "+m[1]+" (Moti Ram: राशि अत्यधिक नहीं होनी चाहिए)।"}],
+ [/^(.+)\. Surety must file an affidavit of solvency with proof of property\/income\.$/,
+  function(m){return tr(m[1])+"। जमानती को संपत्ति/आय के प्रमाण सहित शोधक्षमता का शपथपत्र दाखिल करना होगा।"}],
+ [/^(\d+) prior conviction\(s\) on record\.$/,function(m){return "अभिलेख पर "+m[1]+" पूर्व दोषसिद्धि(याँ)।"}],
+ [/^Composite score raised to the gravity floor for an offence punishable with (.+)\.$/,
+  function(m){return tr(m[1])+" से दंडनीय अपराध हेतु संयुक्त अंक गंभीरता न्यूनतम स्तर तक बढ़ाया गया।"}],
+ [/^Category ([A-D])(\/[A-D])?$/,function(m){return "श्रेणी "+m[1]+(m[2]||"")}]
+];
+
+/* ---------- DURATION / TERM FORMATS ---------- */
+var NUM = [
+ [/^(\d+) years? (\d+) m$/,"$1 वर्ष $2 माह"],
+ [/^(\d+) years?$/,"$1 वर्ष"],
+ [/^(\d+) months?$/,"$1 माह"],
+ [/^(\d+)y (\d+)m$/,"$1व $2मा"],
+ [/^(\d+)m$/,"$1मा"],
+ [/^(\d+) day(s)?$/,"$1 दिन"],
+ [/^(\d+) days$/,"$1 दिन"]
+];
+
+/* ---------- MAIN TRANSLATOR ---------- */
+function tr(s){
+ if(typeof LANG!=="undefined" && LANG!=="hi") return s;
+ if(s===null||s===undefined) return s;
+ s=String(s);
+ var k=s.trim();
+ if(!k) return s;
+ if(HI[k]!==undefined) return HI[k];
+ var i,m;
+ for(i=0;i<NUM.length;i++){ if(NUM[i][0].test(k)) return k.replace(NUM[i][0],NUM[i][1]); }
+ for(i=0;i<TPL.length;i++){ m=k.match(TPL[i][0]); if(m) return TPL[i][1](m); }
+ return s;
+}
+
+var $=function(s){return document.querySelector(s)},picked=[],role="lawyer",lang="en",LANG="en",last=null,view="check";
+var CATL={general:"General",cyber:"Cyber",scst:"SC/ST",women:"Women",children:"Children",state:"State",economic:"Economic",foreigner:"Foreigner"};
+var IC=function(n,sz){return '<svg style="width:'+(sz||16)+'px;height:'+(sz||16)+'px;vertical-align:-3px"><use href="#ic-'+n+'"/></svg>'};
+function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;")}
+var RDESC={prisoner:"Simple language, step-by-step guidance and your rights.",
+ lawyer:"Full analysis plus an auto-drafted bail application.",
+ judge:"Risk assessment, imposable conditions and the reasoning trail."};
+
+$("#asof").value=new Date().toISOString().slice(0,10);
+$("#role").onchange=function(){role=this.value;$("#rdesc").textContent=tr(RDESC[role]);if(last)draw()};
+$("#rdesc").textContent=tr(RDESC.lawyer);
+
+/* ---------- ROUTER: single source of truth ---------- */
+function applyStatic(){
+ document.querySelectorAll("[data-i18n]").forEach(function(el){
+  var k=el.getAttribute("data-i18n"),v=tr(k.replace(/&amp;/g,"&"));
+  if(v!==undefined)el.innerHTML=(k.indexOf("&amp;")>=0?v.replace(/&/g,"&amp;"):v);
+ });
+ $("#q").placeholder=tr("e.g. 420, POCSO, NDPS, 66D");
+ $("#rdesc").textContent=tr(RDESC[role]);
+ $("#cn").textContent=picked.length+" "+tr("selected");
+ var f=document.querySelector("footer .wrap");
+ f.lastChild.textContent=" "+tr("This is a decision-support tool. It does not give legal advice and does not replace the discretion of the court under ss. 437\u2013439 CrPC / ss. 480\u2013483 BNSS, 2023. All provisions shown are indicative and must be verified against the bare Act.");
+ chips();search();
+}
+function setView(v){
+ view=v;
+ document.querySelectorAll("nav button").forEach(function(b){b.classList.toggle("on",b.dataset.v===v)});
+ var solo=(v!=="check");
+ $("#side").classList.toggle("hide",solo);
+ $("#grid").classList.toggle("solo",solo);
+ draw();
+}
+document.querySelectorAll("nav button").forEach(function(b){b.onclick=function(){setView(b.dataset.v)}});
+
+function draw(){
+ if(view==="roster")return drawRoster();
+ if(view==="acts")return drawActs();
+ if(!last)return $("#out").innerHTML='<div class="card"><div class="empty">'+IC("scale",46)+
+  '<h3>'+tr("No case entered yet")+'</h3><p>'+
+  (LANG==="hi"?"बाईं ओर आरोप और गिरफ़्तारी की तिथि भरें, फिर <b>जमानत पात्रता जाँचें</b> दबाएँ। कार्यप्रणाली देखने हेतु <b>नमूना मामला देखें</b> भी दबा सकते हैं।":
+   'Select the charges and the date of arrest on the left, then press <b>Check Bail Eligibility</b>. You can also press <b>Load sample case</b> to see how it works.')+'</p></div></div>';
+ drawFinding(last);
+}
+
+/* ---------- language ---------- */
+document.querySelectorAll(".langsw button").forEach(function(b){b.onclick=function(){
+ document.querySelectorAll(".langsw button").forEach(function(x){x.classList.remove("on")});
+ b.classList.add("on");lang=b.dataset.l;LANG=lang;
+ applyStatic();draw();
+}});
+
+/* ---------- charge picker ---------- */
+function search(){
+ var q=$("#q").value.toLowerCase().trim(),c=$("#cat").value;
+ var l=OFFENCES.filter(function(o){
+  if(c&&o.category!==c)return false;
+  if(!q)return true;
+  return (o.title+" "+o.act+" "+o.ipc+" "+o.bns+" "+o.id).toLowerCase().indexOf(q)>=0}).slice(0,40);
+ $("#res").innerHTML=l.map(function(o){return '<div class="opt" data-id="'+o.id+'"><b>'+tr(o.title)+'</b>'+
+  '<span>'+o.act+(o.bns&&o.bns!=="—"?" · "+tr("BNS")+" §"+o.bns:"")+" · "+tr(BailReckoner.fmtTerm(o.max))+" · "+tr(o.bail)+'</span></div>'}).join("")
+  ||'<div class="opt"><span>'+tr("No matching provision found")+'</span></div>';
+ document.querySelectorAll(".opt[data-id]").forEach(function(d){d.onclick=function(){
+  if(picked.indexOf(d.dataset.id)<0)picked.push(d.dataset.id);$("#q").value="";chips();search()}});
+}
+function chips(){
+ $("#cn").textContent=picked.length+" "+tr("selected");
+ $("#chips").innerHTML=picked.map(function(id){var o=OFFENCES.filter(function(x){return x.id===id})[0];
+  return '<span class="chip">'+tr(o.title)+' <x data-id="'+id+'">✕</x></span>'}).join("");
+ document.querySelectorAll(".chip x").forEach(function(x){x.onclick=function(){
+  picked=picked.filter(function(p){return p!==x.dataset.id});chips()}});
+}
+$("#q").oninput=search;$("#cat").onchange=search;search();
+
+$("#demo").onclick=function(){
+ picked=["420","406","IT66D"];chips();
+ var d=new Date();d.setMonth(d.getMonth()-15);$("#custody").value=d.toISOString().slice(0,10);
+ $("#cs").checked=true;$("#first").checked=true;$("#indigent").checked=true;$("#amt").value=850000;
+ $("#go").click();
+};
+$("#print").onclick=function(){window.print()};
+$("#go").onclick=function(){
+ if(!picked.length){alert(tr("Please select at least one charge."));return}
+ last=BailReckoner.evaluate({chargeIds:picked,custodyStart:$("#custody").value||null,asOf:$("#asof").value,
+  chargeSheetFiled:$("#cs").checked,trialStarted:$("#trial").checked,multipleCases:$("#multi").checked,firstTimeOffender:$("#first").checked,
+  age:+$("#age").value,gender:$("#gender").value,sick:$("#sick").checked,foreignNational:$("#foreign").checked,
+  passportSurrendered:$("#passport").checked,localTies:$("#ties").checked,priorConvictions:+$("#prior").value,
+  absconded:$("#abscond").checked,witnessThreat:$("#threat").checked,influentialPosition:$("#influ").checked,
+  victimRelated:$("#victim").checked,amountInvolved:+$("#amt").value,indigent:$("#indigent").checked});
+ if(view!=="check")setView("check"); else draw();
+};
+
+function card(icon,title,body,ct){return '<div class="card"><h3>'+IC(icon)+tr(title)+(ct?'<span class="ct">'+ct+'</span>':"")+
+ '</h3><div class="cb">'+body+'</div></div>'}
+function gauge(n,v,rs){var c=v<30?"var(--grn)":v<60?"var(--amb)":"var(--red)";
+ return '<div class="g"><div class="h"><span>'+tr(n)+'</span><b style="color:'+c+'">'+v+' / 100</b></div>'+
+ '<div class="bar"><i style="width:'+v+'%;background:'+c+'"></i></div><ul>'+rs.map(function(x){return "<li>"+tr(x)+"</li>"}).join("")+'</ul></div>'}
+
+/* ================= FINDING ================= */
+function drawFinding(r){
+ var T=I18N[lang];
+ if(r.verdict==="NO_CHARGE"){$("#out").innerHTML='<div class="card"><div class="empty"><h3>'+tr("Select at least one charge")+'</h3></div></div>';return}
+ var msg={prisoner:{ELIGIBLE:"The law is in your favour. Ask the jail legal aid clinic to file your application today.",
+   ARGUABLE:"You can apply for bail, and a lawyer will be given to you free of cost.",
+   CONTESTED:"A strict law applies to your case. You still have the right to apply and to free legal aid."},
+  lawyer:{ELIGIBLE:"A statutory route to release is open. File on the entitlement, not on the merits.",
+   ARGUABLE:"Prepare a merits application that meets the triple test directly.",
+   CONTESTED:"A statutory bar applies. Plead Article 21, delay in trial and K.A. Najeeb."},
+  judge:{ELIGIBLE:"Statutory entitlement is made out. Reasons must be recorded if release is declined.",
+   ARGUABLE:"Discretion is to be exercised on the triple test.",
+   CONTESTED:"Conditions of the special statute must be satisfied before release."}}[role][r.verdict];
+ var ic={ELIGIBLE:"check",ARGUABLE:"info",CONTESTED:"warn"}[r.verdict];
+ var h='<div class="ban b-'+r.verdict+'">'+IC(ic,26)+'<div><h2>'+tr(T[r.verdict])+'</h2><p>'+tr(msg)+'</p></div></div>';
+
+ h+='<div class="facts">'+
+  '<div class="fact"><div class="k">'+tr("Custody served")+'</div><div class="v">'+tr(r.servedLabel)+'</div></div>'+
+  '<div class="fact"><div class="k">'+tr("Gravest charge")+'</div><div class="v">'+(r.gravest.ipc!=="—"?"§"+r.gravest.ipc+" IPC":r.gravest.act.split(",")[0])+'</div></div>'+
+  '<div class="fact"><div class="k">'+tr("Maximum sentence")+'</div><div class="v">'+tr(BailReckoner.fmtTerm(r.gravest.max))+'</div></div>'+
+  '<div class="fact"><div class="k">'+tr("Risk (triple test)")+'</div><div class="v">'+tr(r.discretion.band)+'</div></div>'+
+  '<div class="fact"><div class="k">'+tr("Category")+'</div><div class="v">'+tr(r.antilCategory.code)+'</div></div></div>';
+
+ if(role==="prisoner"){
+  h+=card("clock","Your position, step by step",'<ul class="steps">'+
+   '<li class="done"><span class="n">1</span><div><b>'+tr("You were arrested")+'</b><span>'+($("#custody").value||"—")+' — '+tr("you have been in custody for")+' '+tr(r.servedLabel)+'</span></div></li>'+
+   '<li class="'+(r.s436A.applicable&&r.s436A.met?"done":"now")+'"><span class="n">2</span><div><b>'+tr("Half-term rule (s.479 BNSS)")+'</b><span>'+
+    (r.s436A.applicable?(r.s436A.met?tr("You have crossed this date. The court must consider releasing you on your own bond."):
+     tr("You become eligible on")+" <b>"+(r.s436A.eligibleDate||"—")+"</b>, "+tr("which is")+" "+tr(BailReckoner.fmtDur(r.s436A.shortfall))+" "+tr("from now.")):tr(r.s436A.reason))+'</span></div></li>'+
+   '<li class="'+(r.defaultBail.available?"done":"now")+'"><span class="n">3</span><div><b>'+tr("Default bail")+' ('+tr(r.defaultBail.windowLabel)+')</b><span>'+
+    (r.defaultBail.available?tr("The police did not file the charge-sheet in time. You have an automatic right to bail today."):
+     (r.defaultBail.dueDate?tr("The charge-sheet was due by")+" "+r.defaultBail.dueDate+".":"—"))+'</span></div></li>'+
+   '<li><span class="n">4</span><div><b>'+tr("Apply for bail")+'</b><span>'+tr("Free legal aid is your right under Article 39A. Ask the Jail Superintendent for the DLSA lawyer, or call <b>NALSA 15100</b>.")+'</span></div></li></ul>');
+  h+=card("doc","What you must arrange",'<table>'+r.procedural.map(function(p){
+   return "<tr><td style='width:30%'><b>"+tr(p.item)+"</b></td><td>"+tr(p.detail)+"</td></tr>"}).join("")+'</table>'+
+   '<div class="note"><b>'+tr("Important.")+'</b> '+tr("In <i>Moti Ram v. State of M.P.</i>, the Supreme Court held you cannot be kept in jail only because you are too poor to arrange a surety. Tell the court you cannot afford one and ask for release on a personal bond.")+'</div>');
+ }
+
+ h+=card("book","Charges and penal provisions",
+  '<table><tr><th>'+tr("Offence")+'</th><th>'+tr("Statute")+'</th><th>'+tr("Sentence")+'</th><th>'+tr("Bail")+'</th><th>'+tr("Compounding")+'</th><th>'+tr("Court")+'</th></tr>'+
+  r.charges.map(function(c){return "<tr><td><b>"+tr(c.title)+"</b><br><span class='sm'>"+tr(CATL[c.category])+"</span></td>"+
+   "<td>"+c.act+(c.bns&&c.bns!=="—"?"<br><span class='sm'>"+tr("BNS")+" §"+c.bns+"</span>":"")+"</td>"+
+   "<td>"+tr(BailReckoner.fmtTerm(c.max))+(c.min?"<br><span class='sm' style='color:var(--red)'>"+tr("min")+" "+tr(BailReckoner.fmtTerm(c.min))+"</span>":"")+"</td>"+
+   "<td><span class='tag "+(/^Bailable/.test(c.bail)?"t-g":"t-r")+"'>"+tr(c.bail)+"</span><br><span class='sm'>"+tr(c.cog?"Cognizable":"Non-cognizable")+"</span></td>"+
+   "<td class='sm'>"+tr(c.comp)+"</td><td class='sm'>"+tr(c.court)+"</td></tr>"}).join("")+'</table>'+
+  r.charges.map(function(c){return c.notes.map(function(n){return '<div class="note"><b>'+tr(c.title)+".</b> "+tr(n)+'</div>'}).join("")}).join(""),
+  r.charges.length+" "+tr("charge(s)"));
+
+ if(r.flags.length)h+=card("warn","Statutory bars and reliefs",r.flags.map(function(f){
+  return '<div class="'+(f.level==="bar"?"warn":"ok")+'">'+tr(f.text)+'</div>'}).join(""));
+
+ var cl="";
+ if(r.s436A.applicable){
+  var span=Math.max(r.s436A.maxTerm,r.servedMonths*1.05),p=Math.min(100,r.servedMonths/span*100),t=r.s436A.thresholdMonths/span*100;
+  cl='<p style="margin:0">'+tr("Threshold:")+' <b>'+tr(r.s436A.fraction)+'</b> '+tr("of")+' '+tr(BailReckoner.fmtTerm(r.s436A.maxTerm))+' = <b>'+tr(r.s436A.thresholdLabel)+'</b></p>'+
+   '<div class="clk"><i style="width:'+p+'%;background:'+(r.s436A.met?"var(--grn)":"var(--blue)")+'"></i><span class="m" style="left:'+t+'%"></span></div>'+
+   '<div class="scale"><span>'+tr("Arrest")+'</span><span style="color:var(--red)">'+tr("▲ Release threshold")+'</span><span>'+tr(BailReckoner.fmtTerm(r.s436A.maxTerm))+'</span></div>'+
+   '<p style="font-size:14px">'+tr("Served")+' <b>'+tr(r.servedLabel)+'</b> '+tr("of the")+' '+tr(r.s436A.thresholdLabel)+' '+tr("threshold.")+' '+
+   (r.s436A.met?'<b style="color:var(--grn)">'+tr("Threshold crossed — release on personal bond is mandated.")+'</b>':
+    tr("Eligible on")+' <b>'+(r.s436A.eligibleDate||"—")+'</b>, '+tr("in")+' '+tr(BailReckoner.fmtDur(r.s436A.shortfall))+'.')+'</p>'+
+   (r.s436A.fullTermMet?'<div class="warn"><b>'+tr("Custody already exceeds the maximum sentence.")+'</b> '+tr("Continued detention violates Article 21 (Hussainara Khatoon). Immediate release is required.")+'</div>':"");
+ } else cl='<div class="note">'+tr(r.s436A.reason)+'</div>';
+ cl+='<p style="font-size:14px;margin-bottom:0"><b>'+tr("Default bail.")+'</b> '+tr(r.defaultBail.windowLabel)+' '+tr("under")+' '+tr(r.defaultBail.basis)+'. '+
+  (r.defaultBail.available?'<b style="color:var(--grn)">'+tr("Window expired with no charge-sheet — an indefeasible right has accrued.")+'</b>':
+   (r.defaultBail.dueDate?tr("Charge-sheet due by")+' '+r.defaultBail.dueDate+'.':''))+'</p>';
+ h+=card("clock","Custody clock — s.436A CrPC / s.479 BNSS",cl);
+
+ h+=card("check","Routes to release",r.routes.map(function(x){
+  var c=/Certain|Very strong|Strong/.test(x.strength)?"t-g":/Difficult/.test(x.strength)?"t-r":"t-a";
+  return '<div class="route"><h4>'+tr(x.name)+' <span class="tag '+c+' st">'+tr(x.strength)+'</span></h4><p>'+tr(x.why)+'</p></div>'}).join(""));
+
+ if(role!=="prisoner"){
+  h+=card("scale","Judicial discretion — the triple test",
+   gauge("Risk of absconding",r.discretion.flight,r.discretion.reasons.flight)+
+   gauge("Risk of tampering with evidence",r.discretion.evidence,r.discretion.reasons.evidence)+
+   gauge("Risk of influencing witnesses",r.discretion.witness,r.discretion.reasons.witness)+
+   '<div class="note"><b>'+tr("Composite")+' '+r.discretion.composite+'/100 — '+tr(r.discretion.band)+'.</b> '+tr(r.antilCategory.text)+
+   ' '+tr("This score is advisory. The court must apply its own mind and record reasons — <i>P. Chidambaram v. ED</i> (2019) 9 SCC 24.")+'</div>');
+  h+=card("shield",role==="judge"?"Conditions the court may impose":"Conditions to offer in the application",
+   '<table>'+r.conditions.map(function(c,i){return "<tr><td style='width:36px' class='sm'>("+(i+1)+")</td><td>"+tr(c)+"</td></tr>"}).join("")+'</table>');
+  h+=card("doc","Procedural requirements",'<table>'+r.procedural.map(function(p){
+   return "<tr><td style='width:28%'><b>"+tr(p.item)+"</b></td><td>"+tr(p.detail)+"</td></tr>"}).join("")+'</table>');
+ }
+
+ h+=card("gavel","Relevant judgments",r.caselaw.map(function(c){
+  return '<div class="cite"><b>'+c.case+'</b><p>'+tr(c.holding)+'</p></div>'}).join(""),r.caselaw.length+" "+tr("authorities"));
+
+ if(role!=="prisoner")h+=card("info","How this result was reached",
+  '<table class="tr">'+r.trace.map(function(t){return "<tr><td>"+tr(t.rule)+"</td><td>"+tr(t.fact)+"</td></tr>"}).join("")+'</table>'+
+  '<div class="note">'+tr("Every conclusion is derived from codified statute and binding precedent, not from a predictive model. No opaque algorithm decides liberty — the court retains full discretion.")+'</div>');
+
+ if(role==="lawyer"){
+  var g=r.gravest,sec=r.allBailable?"436 CrPC / 478 BNSS":(r.s436A.applicable&&r.s436A.met?"436A CrPC / 479 BNSS":
+   (r.defaultBail.available?"167(2) CrPC / 187 BNSS":"439 CrPC / 483 BNSS"));
+  var dr='IN THE COURT OF '+(/Sessions|Special/.test(g.court)?"THE LEARNED SESSIONS JUDGE / SPECIAL COURT":"THE LEARNED JUDICIAL MAGISTRATE FIRST CLASS")+
+  '\n\n          Bail Application No. ________ of '+new Date().getFullYear()+
+  '\n          In FIR No. ________ , Police Station ________'+
+  '\n          Under Sections: '+r.charges.map(function(c){return c.ipc!=="—"?c.ipc+" IPC / "+c.bns+" BNS":c.act}).join(", ")+
+  '\n\n     APPLICATION UNDER SECTION '+sec+' FOR RELEASE ON BAIL\n\nMOST RESPECTFULLY SHOWETH:\n\n'+
+  '1.  That the applicant has been in judicial custody since '+($("#custody").value||"________")+', a period of '+r.servedLabel+' as on '+r.asOf+'.\n\n'+
+  '2.  That the gravest offence alleged is '+g.title+', punishable with '+BailReckoner.fmtTerm(g.max)+'.\n\n'+
+  (r.s436A.applicable&&r.s436A.met?'3.  That the applicant has undergone detention exceeding '+r.s436A.fraction+' of the maximum sentence and is entitled to release on a personal bond under s.436A CrPC / s.479 BNSS.\n\n':'')+
+  (r.defaultBail.available?'3A. That no charge-sheet having been filed within '+r.defaultBail.windowLabel+', the indefeasible right to default bail has accrued — Bikramjit Singh v. State of Punjab (2020) 10 SCC 616.\n\n':'')+
+  '4.  That the applicant is not a flight risk, has verified roots in society, and undertakes not to tamper with evidence or influence any witness. The applicant offers to abide by the following conditions:\n'+
+  r.conditions.slice(0,3).map(function(c,i){return "      ("+String.fromCharCode(97+i)+") "+c}).join("\n")+'\n\n'+
+  '5.  That the applicant relies upon:\n'+r.caselaw.slice(0,4).map(function(c,i){return "      ("+(i+1)+") "+c.case}).join("\n")+'\n\n'+
+  'PRAYER\n\nIt is therefore prayed that this Hon\'ble Court may be pleased to release the applicant on bail on such terms as it deems fit in the interest of justice.\n\n'+
+  'Place: ________                          Applicant\nDate : '+r.asOf+'                   Through Counsel / DLSA Panel Advocate';
+  h+=card("doc","Draft bail application",'<pre>'+esc(dr)+'</pre>'+
+   '<div class="note">'+tr("Auto-composed from the result above. Verify every citation and fact before filing.")+'</div>');
+ }
+ $("#out").innerHTML=h;window.scrollTo(0,0);
+}
+
+/* ================= ROSTER ================= */
+function drawRoster(){
+ var rows=BailReckoner.screenRoster(ROSTER.map(function(p){var c={};for(var k in p)c[k]=p[k];c.asOf=$("#asof").value;return c}));
+ var el=rows.filter(function(r){return r.verdict==="ELIGIBLE"}).length,
+     s4=rows.filter(function(r){return r.s436}).length,
+     df=rows.filter(function(r){return r.def}).length,
+     ov=rows.filter(function(r){return r.over}).length;
+ var h='<div class="facts">'+
+  '<div class="fact"><div class="k">'+tr("On roster")+'</div><div class="v">'+rows.length+'</div></div>'+
+  '<div class="fact"><div class="k">'+tr("Fit for release")+'</div><div class="v" style="color:var(--grn)">'+el+'</div></div>'+
+  '<div class="fact"><div class="k">'+tr("s.479 BNSS met")+'</div><div class="v" style="color:var(--grn)">'+s4+'</div></div>'+
+  '<div class="fact"><div class="k">'+tr("Default bail due")+'</div><div class="v" style="color:var(--amb)">'+df+'</div></div>'+
+  '<div class="fact"><div class="k">'+tr("Beyond max term")+'</div><div class="v" style="color:var(--red)">'+ov+'</div></div>'+
+  '<div class="fact"><div class="k">'+tr("Median custody")+'</div><div class="v">'+tr(BailReckoner.fmtDur(rows.map(function(r){return r.servedMonths}).sort(function(a,b){return a-b})[Math.floor(rows.length/2)]))+'</div></div></div>';
+ h+=card("list","Undertrial Review Committee — screening board",
+  '<p class="sm" style="margin:0 0 12px">'+tr("Duty of the Jail Superintendent under s.479(3) BNSS to report eligible undertrials, read with <i>In Re: Inhuman Conditions in 1382 Prisons</i> (2016) 3 SCC 700 requiring quarterly UTRC sittings. Sorted by priority for release — click any row to open the full result.")+'</p>'+
+  '<table><tr><th>'+tr("Register No.")+'</th><th>'+tr("Name")+'</th><th>'+tr("Jail")+'</th><th>'+tr("Charges")+'</th><th>'+tr("Custody")+'</th><th>'+tr("Result")+'</th><th>'+tr("Risk")+'</th><th>'+tr("Best route")+'</th></tr>'+
+  rows.map(function(r){var c=r.verdict==="ELIGIBLE"?"t-g":r.verdict==="CONTESTED"?"t-r":"t-a";
+   return '<tr class="rl" data-id="'+r.id+'"><td class="sm">'+r.id+'</td><td><b>'+r.name+'</b></td><td class="sm">'+r.jail+'</td>'+
+    '<td class="sm">'+r.chargeIds.map(function(i){var o=OFFENCES.filter(function(x){return x.id===i})[0];return o?(o.ipc!=="—"?"§"+o.ipc:o.id):i}).join(", ")+'</td>'+
+    '<td>'+tr(r.served)+(r.over?' <span class="tag t-r">'+tr("OVER")+'</span>':"")+'</td><td><span class="tag '+c+'">'+tr(r.verdict)+'</span></td>'+
+    '<td class="sm">'+tr(r.risk)+'</td><td class="sm">'+tr(r.top)+'</td></tr>'}).join("")+'</table>',rows.length+" "+tr("listed"));
+ h+=card("info","Committee note",
+  '<div class="ok"><b>'+(LANG==="hi"?rows.length+" में से "+el+" विचाराधीन बंदियों को रिहाई का वैधानिक अधिकार प्राप्त है।":el+' of '+rows.length+' undertrials have a statutory entitlement to release.')+'</b> '+
+   (LANG==="hi"?s4+" ने धारा 479 भा.ना.सु.सं. की सीमा पार कर ली है और "+df+" को डिफ़ॉल्ट जमानत का अर्जित अधिकार है। समिति सचिव, DLSA को उनकी ओर से आवेदन दाखिल करने का निर्देश दे सकती है।":s4+' have crossed the s.479 BNSS threshold and '+df+' have an accrued right to default bail. The Committee may direct the Secretary, DLSA to move applications on their behalf.')+'</div>'+
+  (ov?'<div class="warn"><b>'+(LANG==="hi"?ov+" विचाराधीन बंदी अपने आरोपों की अधिकतम सज़ा से अधिक समय हिरासत में हैं।":ov+' undertrial(s) have been in custody longer than the maximum sentence their charges carry.')+'</b> '+tr("Immediate reference to the jurisdictional Magistrate is required.")+'</div>':"")+
+  '<div class="note">'+tr("This roster is synthetic demonstration data. In deployment it binds to the ePrisons undertrial register over the ICJS bus and re-screens nightly.")+'</div>');
+ $("#out").innerHTML=h;
+ document.querySelectorAll(".rl").forEach(function(tr){tr.onclick=function(){
+  var rec=rows.filter(function(x){return x.id===tr.dataset.id})[0];
+  last=rec.report;picked=rec.chargeIds.slice();chips();
+  role="judge";$("#role").value="judge";$("#rdesc").textContent=RDESC.judge;
+  setView("check");
+ }});
+}
+
+/* ================= ACTS DIRECTORY ================= */
+function drawActs(){
+ var by={};OFFENCES.forEach(function(o){(by[o.category]=by[o.category]||[]).push(o)});
+ var order=["general","cyber","scst","women","children","state","economic","foreigner"];
+ var NAMES={general:"General offences — IPC 1860 / BNS 2023",cyber:"Cyber crimes",scst:"Crimes against Scheduled Castes & Scheduled Tribes",
+  women:"Crimes against women",children:"Crimes against children",state:"Offences against the State",
+  economic:"Economic offences",foreigner:"Crimes involving foreigners"};
+ var h='<div class="card"><div class="cb"><p style="margin:0"><b>'+tr("Statutory database.")+'</b> '+OFFENCES.length+
+  ' '+tr("offences mapped across the Indian Penal Code, the Bharatiya Nyaya Sanhita 2023 and the special statutes, with maximum and minimum sentence, cognizability, bailability, compounding status and trial forum. This is the knowledge base the eligibility engine reads from.")+'</p></div></div>';
+ order.forEach(function(k){if(!by[k])return;
+  h+=card("book",NAMES[k],'<table><tr><th>'+tr("Offence")+'</th><th>'+tr("Statute")+'</th><th>'+tr("BNS")+'</th><th>'+tr("Sentence")+'</th><th>'+tr("Bail")+'</th><th>'+tr("Compounding")+'</th></tr>'+
+   by[k].map(function(c){return "<tr><td><b>"+tr(c.title)+"</b></td><td class='sm'>"+c.act+"</td><td class='sm'>"+
+    (c.bns&&c.bns!=="—"?"§"+c.bns:"—")+"</td><td>"+tr(BailReckoner.fmtTerm(c.max))+
+    (c.min?"<br><span class='sm' style='color:var(--red)'>"+tr("min")+" "+tr(BailReckoner.fmtTerm(c.min))+"</span>":"")+"</td>"+
+    "<td><span class='tag "+(/^Bailable/.test(c.bail)?"t-g":"t-r")+"'>"+tr(c.bail)+"</span></td><td class='sm'>"+tr(c.comp)+"</td></tr>"}).join("")+
+   '</table>',by[k].length+" "+tr("offences"));
+ });
+ $("#out").innerHTML=h;window.scrollTo(0,0);
+}
+draw();
+</script>
+<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js/v31edd6df95cf4e85bb4c19e7a9bdbcba1788362987495" integrity="sha512-iIg7k2xntmwu6/uSb5tpc/hySgZc4eoL31yB29W6tJFo2akwjPWcEqnCEdJvGexCL0KEQwVYv5BlowfhVz26hg==" data-cf-beacon='{"version":"2024.11.0","token":"1954b47c125f43f8b4338b3c4f804e4f","spa":2}' crossorigin="anonymous"></script>
+<script>(function(){function c(){var b=a.contentDocument||(a.contentWindow&&a.contentWindow.document);if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a36b82a8ce2074de',t:'MTc4ODY3NzEyMQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
